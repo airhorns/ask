@@ -1,0 +1,24 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="clearfix">
+    <%= f.label :email %>
+    <div class="input"><%= f.email_field :email %></div>
+  </div>
+
+  <div class="clearfix">
+    <%= f.label :password %>
+    <div class="input"><%= f.password_field :password %></div>
+  </div>
+
+  <div class="clearfix">
+    <%= f.label :password_confirmation %>
+    <div class="input"><%= f.password_field :password_confirmation %></div>
+  </div>
+
+  <div class="actions"><%= f.submit "Sign up", :class => "btn primary large" %></div>
+<% end %>
+
+<%= render :partial => "devise/shared/links" %>

@@ -1,0 +1,13 @@
+defaults: &defaults
+  twilio:
+    sid: 'ACfe0c2ad14e11f0d1eeff1cd6fdc34a57'
+    token: '9868ece9300972904fa9730d19a24b02'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
