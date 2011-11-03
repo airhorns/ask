@@ -4,26 +4,27 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
   setup do
     @responder = Factory.create(:responder)
   end
-  test "should allow a question to be answered" do
+  test "should allow the first question to be answered" do
     @survey = Factory.create(:survey_with_many_questions)
 
-    assert_equal 0, @survey.questions.first.answers.length
-
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+    assert_difference('Response.count') do
+      assert_difference('Answer.count') do
+        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+      end
+    end
 
     assert_response :success
-    assert_equal 1, @survey.questions.first.answers.reload.length
   end
 
   test "should allow the last question to be answered" do
     @survey = Factory.create(:survey_with_one_question)
 
-    assert_equal 0, @survey.questions.first.answers.length
-
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
-
+    assert_difference('Response.count') do
+      assert_difference('Answer.count') do
+        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+      end
+    end
     assert_redirected_to :action => :finished, :format => :xml
-    assert_equal 1, @survey.questions.first.answers.reload.length
   end
 
   test "should error if the user tries to answer more than the available questions" do

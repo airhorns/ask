@@ -1,0 +1,19 @@
+<h1>Your Surveys
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Questions</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr data-foreach-survey="surveys">
+      <td data-bind="survey.name"></td>
+      <td data-bind="survet.questions.length"></td>
+      <td>
+        <a data-route="survey">Show</a>
+        <a data-route="survey.edit">Edit</a>
+        <a data-route="survey">Analyze</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -9,18 +9,26 @@
 #= require twitter/bootstrap
 
 # Batman.js and its adapters
-#= require batman/batman
-#= require batman/batman.jquery
-#= require batman/batman.rails
+##= require batman/batman
+##= require batman/batman.jquery
+##= require batman/batman.rails
 
+#= require batman_dev/batman
+#= require batman_dev/batman.jquery
+#= require batman_dev/extras/batman.rails
+
+#= require helpers/pluralize_helper
 #= require ask
 
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./helpers
 
-
 #= require_tree .
+
+#Batman.mixin Batman.config,
+  #usePushState: yes
+
 # Run the Batman app
 $(document).ready ->
   Ask.run()

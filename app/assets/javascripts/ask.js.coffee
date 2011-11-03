@@ -1,7 +1,8 @@
 window.Ask = class Ask extends Batman.App
 
-  # @root 'controller#all'
   # @route '/controller/:id', 'controller#show', resource: 'model', action: 'show'
+  @resources 'survey'
+  @root 'dashboard#index'
 
   @on 'run', ->
     console?.log "Running ...."

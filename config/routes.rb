@@ -2,7 +2,6 @@ Ask::Application.routes.draw do
 
   devise_for :customers
 
-  resources :surveys
 
   scope '/api/twilio', :as => 'twilio' do
     match '/receive/:phone_number' => "twilio#receive"
@@ -11,6 +10,14 @@ Ask::Application.routes.draw do
   end
 
   root :to => "dashboard#app"
+
+  constraints :format => :json do
+    resources :surveys do
+      resources :questions
+    end
+  end
+
+  match '*segments' => "dashboard#app"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
