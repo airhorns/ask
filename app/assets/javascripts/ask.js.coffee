@@ -1,6 +1,7 @@
 window.Ask = class Ask extends Batman.App
 
-  # @route '/controller/:id', 'controller#show', resource: 'model', action: 'show'
+  Batman.View::prefix = 'assets/views'
+
   @resources 'survey'
   @root 'dashboard#index'
 

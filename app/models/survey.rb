@@ -9,7 +9,11 @@ class Survey < ActiveRecord::Base
 
   scope :active, where(:active => true)
 
-  def next_question_for(responder)
-    questions.unanswered_by(responder).first
+  def as_json(options = {})
+    super({:include => [:questions], :methods => [:response_count]}.merge(options))
+  end
+
+  def response_count
+    responses.count
   end
 end

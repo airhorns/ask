@@ -1,0 +1,39 @@
+<h1>Survey: <span data-bind="survey.name"></span></h1>
+<dl>
+  <dt>Phone:</dt>
+  <dd data-bind="survey.phone_number"></dd>
+  <dt>Active:</dt>
+  <dd data-bind="survey.active"></dd>
+</dl>
+
+<h2>Questions</h2>
+<table>
+  <tr>
+    <th>Question Name</th>
+    <th>Actions</th>
+  </tr>
+  <tr data-foreach-question="survey.questions">
+    <td data-bind="question.text"></td>
+    <td>
+      <a class="btn small primary">More Info</a>
+      <a class="btn small info">Edit</a>
+      <a class="btn small danger">Destroy</a>
+    </td>
+  </tr>
+</table>
+<h2>Responses</h2>
+<table>
+  <tr>
+    <th>Responder</th>
+    <th data-foreach-question="survey.questions.sortedBy.order" data-bind="question.text | truncate 1000"></th>
+    <th>Actions</th>
+  </tr>
+  <tr data-foreach-response="survey.responses">
+    <td data-bind="response.responder.phone_number"></td>
+    <td data-foreach-question="survey.questions.sortedBy.order" data-bind="response.answers.indexedBy.question_id | get question.id | get 'toArray.0.text'"></td>
+    <td>
+      <a class="btn small primary">More Info</a>
+      <a class="btn danger small" data-event-click="response.destroy">Destroy</a>
+    </td>
+  </tr>
+</table>

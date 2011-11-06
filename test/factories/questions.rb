@@ -8,8 +8,11 @@ FactoryGirl.define do
     "What #{traits[rand 4]} are you?"
   end
 
+  sequence :question_order
+
   factory :question do
-    text { Factory.generate(:question)}
+    text { FactoryGirl.generate(:question)}
+    order { FactoryGirl.generate(:question_order)}
   end
 
   factory :question_with_answer, :parent => :question do |question|

@@ -1,14 +1,16 @@
-<h1>Your Surveys
+<h1>Surveys</h1>
 <table>
   <thead>
     <th>Name</th>
     <th>Questions</th>
+    <th>Total Responses</th>
     <th></th>
   </thead>
   <tbody>
     <tr data-foreach-survey="surveys">
       <td data-bind="survey.name"></td>
-      <td data-bind="survet.questions.length"></td>
+      <td data-bind="survey.questions.length"></td>
+      <td data-bind="survey.response_count"></td>
       <td>
         <a data-route="survey">Show</a>
         <a data-route="survey.edit">Edit</a>

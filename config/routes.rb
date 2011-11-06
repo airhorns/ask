@@ -12,12 +12,25 @@ Ask::Application.routes.draw do
   root :to => "dashboard#app"
 
   constraints :format => :json do
-    resources :surveys do
-      resources :questions
+    resources :surveys, :except => [:edit] do
+      resources :questions, :only => [:index, :new]
+      resources :responses, :only => [:index]
+      get :start, :on => :member
     end
+
+    resources :responders, :except => [:edit, :destroy, :create] do
+      resources :responses, :only => [:index]
+    end
+
+    resources :questions, :only => [:show, :update, :destroy]
+    resources :responses, :only => [:show, :destroy] do
+      resources :answers, :only => [:index]
+    end
+    resources :answers, :only => [:show, :destroy]
   end
 
-  match '*segments' => "dashboard#app"
+
+  #match '*segments' => "dashboard#app"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

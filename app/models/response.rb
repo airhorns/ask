@@ -17,11 +17,11 @@ class Response < ActiveRecord::Base
   end
 
   def unanswered_questions
-    survey.questions.joins("LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.responder_id = #{responder.id}").where('answers.id IS NULL')
+    survey.questions.joins("LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.response_id = #{id}").where('answers.id IS NULL')
   end
 
   def next_question
-    unanswered_questions.first
+    unanswered_questions.order('"questions"."order"').first
   end
 
   def step!(text)
@@ -34,10 +34,13 @@ class Response < ActiveRecord::Base
     end
   end
 
+  def as_json(options = {})
+    super({:include => [:answers, :responder]}.merge(options))
+  end
   private
 
   def answer_question!(question, text)
-    question.answers.create!(:responder => responder, :question => question, :response => self, :text => text)
+    question.answer!(self, text)
   end
 
 end

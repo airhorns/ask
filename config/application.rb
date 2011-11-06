@@ -44,6 +44,7 @@ module Ask
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
   end
 
   Config = YAML.load_file("#{Rails.root}/config/constants.yml")[Rails.env]

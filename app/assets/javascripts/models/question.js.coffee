@@ -3,9 +3,10 @@ class Ask.Question extends Batman.Model
   @persist Batman.RailsStorage
 
   @belongsTo 'survey'
-  @encode 'text'
+  @encode 'text', 'order'
 
   @url: (options) ->
+    survey_id = options.survey_id
     delete options.survey_id
-    "/surveys/#{options.survey_id}/questions"
+    "/surveys/#{survey_id}/questions"
   url: -> "/surveys/#{@get('survey.id')}/questions/#{@get('id')}"

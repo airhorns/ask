@@ -3,6 +3,6 @@ class Ask.Survey extends Batman.Model
   @persist Batman.RailsStorage
 
   @hasMany 'questions'
-
-  @encode 'name', 'active'
+  @hasMany 'responses'
+  @encode 'name', 'active', 'phone_number', 'response_count'
 
