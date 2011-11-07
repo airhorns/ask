@@ -2,12 +2,12 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.1'
 
-gem 'sqlite3'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails', :git => 'https://github.com/evanwalsh/jquery-rails.git'
 gem 'batman-rails'
 gem 'twilio-ruby'
+gem 'factory_girl_rails' # needed everywhere for seeds
 
 group :assets do
   gem 'sass-rails',   '~> 3.1.4'
@@ -15,14 +15,21 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :production do
+  gem 'pg'
+  gem 'thin'
+end
+
 group :development, :test do
+  gem 'sqlite3'
   gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'pry'
+  gem 'heroku'
+  gem 'foreman'
 end
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'minitest', '~> 2.7.0'
-  gem 'factory_girl_rails'
 end
