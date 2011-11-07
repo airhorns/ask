@@ -4,6 +4,19 @@ class Question < ActiveRecord::Base
   validates_presence_of :text, :order
 
   def answer!(response, text)
-    answers.create!(:question => self, :response => response, :text => text)
+    answer_for(response, text).save!
+  end
+
+  def rated?
+    false
+  end
+
+  def as_json(options = {})
+    super({:methods => [:rated?]}.merge(options))
+  end
+
+  private
+  def answer_for(response, text)
+    answers.build(:question => self, :response => response, :text => text)
   end
 end

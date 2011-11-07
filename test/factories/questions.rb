@@ -18,4 +18,5 @@ FactoryGirl.define do
   factory :question_with_answer, :parent => :question do |question|
     association :answer
   end
+
 end

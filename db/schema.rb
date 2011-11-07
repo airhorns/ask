@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111105231442) do
+ActiveRecord::Schema.define(:version => 20111106212046) do
+
+  create_table "answer_meta_data", :force => true do |t|
+    t.integer  "answer_id"
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -49,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20111105231442) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order"
+    t.string   "type"
   end
 
   create_table "responders", :force => true do |t|
