@@ -1,8 +1,5 @@
 Bundler.setup(:test)
 require 'factory_girl'
-Dir[File.join(Rails.root, 'test/factories/*.rb')].each do |filename|
-  require filename
-end
 
 namespace :demo do
   desc "Installs some random data"

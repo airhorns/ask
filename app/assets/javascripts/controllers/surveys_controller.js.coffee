@@ -1,5 +1,6 @@
 class Ask.SurveysController extends Batman.Controller
   index: (params) ->
+    console.log "at surveys"
     @set 'surveys', Ask.Survey.get('all')
 
   show: (params) ->
