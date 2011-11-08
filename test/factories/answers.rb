@@ -6,14 +6,20 @@ FactoryGirl.define do
     words[rand 4]
   end
 
+  sequence :rated_answer_text do |n|
+    if n % 5 == 0
+      rand(4) + 1
+    else
+      "*" * (rand(4) + 1)
+    end
+  end
+
   factory :answer do
     association :responder
-    text {FactoryGirl.generate(:answer_text)}
+    text { FactoryGirl.generate(:answer_text) }
   end
 
   factory :rated_answer, :parent => :answer do |answer|
-    answer.after_create do |survey|
-      answer.meta_data << FactoryGirl(:answer_rating_meta_data)
-    end
+    text { FactoryGirl.generate(:rated_answer_text) }
   end
 end

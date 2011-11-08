@@ -2,7 +2,7 @@ class Ask.Answer extends Batman.Model
   @storageKey: 'answers'
   @persist Batman.RailsStorage
 
-  @encode 'text'
+  @encode 'text', 'numeric_rating', 'rated?'
   @belongsTo 'response'
   @belongsTo 'question'
 

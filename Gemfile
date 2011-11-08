@@ -7,7 +7,6 @@ gem 'twitter-bootstrap-rails'
 gem 'jquery-rails', :git => 'https://github.com/evanwalsh/jquery-rails.git'
 gem 'batman-rails'
 gem 'twilio-ruby'
-gem 'factory_girl_rails' # needed everywhere for seeds
 
 group :assets do
   gem 'sass-rails',   '~> 3.1.4'
@@ -26,6 +25,7 @@ group :development, :test do
   gem 'pry'
   gem 'heroku'
   gem 'foreman'
+  gem 'factory_girl_rails' # needed everywhere for seeds
 end
 
 group :test do

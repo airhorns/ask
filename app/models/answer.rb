@@ -1,28 +1,49 @@
 class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :response
-  has_many :meta_datas, :class_name => 'AnswerMetaData', :dependent => :destroy
-  has_many :ratings, :class_name => 'AnswerMetaData', :conditions => {:key => 'rating'}
+  has_one :rating, :class_name => 'AnswerMetaData', :conditions => {:key => 'rating'}
   validates_presence_of :question, :response, :text
-  validates_associated :meta_datas
 
-  def rate(text_rating)
-    rating = ratings.build(:value => text_rating)
-    ratings << rating
-    rating
+  validates_associated :rating, :if => :rated?
+  before_validation :build_rating_meta_data, :if => :rated?
+
+  def numeric_rating
+    rating.try(:value)
   end
 
-  def rating
-    if ratings.length > 0
-      ratings.first.value
-    end
-  end
-
-  def as_json(options = {})
-    default_options = {}
+  def serializable_hash(options = {})
     if question.rated?
-      default_options[:methods] = [:rating]
+      super({:methods => [:numeric_rating, :rated?]}.merge(options))
+    else
+      super
     end
-    super(default_options.merge(options))
   end
+
+  def parse_rating
+    star_count = text.count("*#")
+    if star_count > 0
+      return star_count
+    else
+      return text.to_i
+    end
+  end
+
+  def rate(value)
+    if rating
+      rating.value = value
+    else
+      build_rating(:value => value)
+    end
+  end
+
+  def rated?
+    question.rated?
+  end
+
+  private
+
+  def build_rating_meta_data
+    rate(parse_rating)
+  end
+
 end

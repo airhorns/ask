@@ -2,7 +2,7 @@ class ResponsesController < ApplicationController
   respond_to :json
 
   def index
-    @responses = Survey.includes(:responses => [:responder, :answers]).find(params[:survey_id]).responses
+    @responses = Survey.includes(:responses => [:responder, {:answers => [:question, :rating]}]).find(params[:survey_id]).responses
     respond_with @responses
   end
 

@@ -9,4 +9,8 @@ FactoryGirl.define do
   factory :rating_question_with_answer, :parent => :rating_question do |question|
     association :rated_answer
   end
+
+  factory :rating_question_with_survey, :parent => :rating_question do |question|
+    association :survey
+  end
 end

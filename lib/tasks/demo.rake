@@ -9,7 +9,12 @@ namespace :demo do
       survey = FactoryGirl.create(:survey_with_one_rating_question)
       20.times do
         response = FactoryGirl.create(:response, :survey => survey)
-        response.step!("#{rand 5}") # Answer the rating
+        if rand(2) == 1
+          response.step!("#{rand(4) + 1}") # Answer the rating
+        else
+          response.step!("#{"*" * (rand(4) + 1)}") # Answer the rating
+        end
+
         while response.step!(FactoryGirl.generate(:answer_text))
           true
         end

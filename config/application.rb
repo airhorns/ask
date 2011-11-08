@@ -33,6 +33,12 @@ module Ask
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.generators do |g|
+      g.orm             :active_record
+      g.template_engine :erb
+      g.test_framework  :test_unit, :fixture_replacement => :factory_girl
+    end
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 

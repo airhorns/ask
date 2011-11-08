@@ -37,6 +37,7 @@ class Response < ActiveRecord::Base
   def as_json(options = {})
     super({:include => [:answers, :responder]}.merge(options))
   end
+
   private
 
   def answer_question!(question, text)
