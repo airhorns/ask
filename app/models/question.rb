@@ -16,6 +16,10 @@ class Question < ActiveRecord::Base
     super({:methods => [:rated?]}.merge(options))
   end
 
+  def stats
+    QuestionStats.new(self)
+  end
+
   private
 
   def answer_for(response, text)

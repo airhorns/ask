@@ -22,7 +22,10 @@ Ask::Application.routes.draw do
       resources :responses, :only => [:index]
     end
 
-    resources :questions, :only => [:show, :update, :destroy]
+    resources :questions, :only => [:show, :update, :destroy] do
+      get :stats, :on => :member
+    end
+
     resources :responses, :only => [:show, :destroy] do
       resources :answers, :only => [:index]
     end

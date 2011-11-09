@@ -8,7 +8,7 @@ class Answer < ActiveRecord::Base
   before_validation :build_rating_meta_data, :if => :rated?
 
   def numeric_rating
-    rating.try(:value)
+    rating.try(:value).to_i
   end
 
   def serializable_hash(options = {})

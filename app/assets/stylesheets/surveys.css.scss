@@ -1,3 +1,26 @@
 // Place all the styles related to the Surveys controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.chart {
+  shape-rendering: crisp-edges;
+  rect {
+    stroke: white;
+    fill: steelblue;
+  }
+  line {
+    stroke-width: 1px;
+    stroke: black;
+  }
+  path {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+  }
+  text {
+    font: 10px sans-serif;
+    &.label {
+      fill: black;
+    }
+  }
+}

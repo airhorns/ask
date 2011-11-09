@@ -10,6 +10,11 @@ class QuestionsController < ApplicationController
     respond_with @question
   end
 
+  def stats
+    @question = Question.includes(:answers => :rating).find(params[:id])
+    respond_with @question.stats
+  end
+
   def new
     @question = Question.new(:survey_id => params[:survey_id])
     respond_with @question

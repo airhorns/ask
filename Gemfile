@@ -26,6 +26,7 @@ group :development, :test do
   gem 'heroku'
   gem 'foreman'
   gem 'factory_girl_rails' # needed everywhere for seeds
+  gem 'timecop'
 end
 
 group :test do
