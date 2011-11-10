@@ -6,13 +6,19 @@ class Ask.SurveysController extends Batman.Controller
     @set 'surveys', Ask.Survey.get('all')
 
   show: (params) ->
-    Ask.Survey.find parseInt(params.id, 10), (err, survey) ->
+    Ask.Survey.find params.id, (err, survey) =>
       throw err if err
       @set 'survey', survey
 
   analyze: (params) ->
-    Ask.Survey.find parseInt(params.id, 10), (err, survey) ->
+    Ask.Survey.find params.id, (err, survey) =>
       throw err if err
       @set 'survey', survey
 
-  @accessor 'currentStats', -> @get('survey.questions.toArray.0.stats')
+  @accessor 'currentStats', ->
+    ratedQuestions = @get('survey.questions')
+    firstRatedQuestion = ratedQuestions.get('toArray.0')
+    if firstRatedQuestion
+      firstRatedQuestion.get('stats')
+    else
+      {}

@@ -1,27 +1,51 @@
 #= require ../../d3_view
 
-data = [
-  {rating: 1, count: 10},
-  {rating: 2, count: 23},
-  {rating: 3, count: 34},
-  {rating: 4, count: 45},
-  {rating: 5, count: 50}
-]
+#data = [
+  #{rating: 1, count: 10},
+  #{rating: 2, count: 23},
+  #{rating: 3, count: 34},
+  #{rating: 4, count: 45},
+  #{rating: 5, count: 50}
+#]
 
 class Ask.RatingDistributionView extends Ask.D3View
   width: 100
   height: 100
 
-  @accessor 'data', -> @get('renderContext').findKey('currentStats')[0] || []
+  @accessor 'data', ->
+    allData = @get('renderContext').findKey('currentStats')[0]
+    if allData? && allData.daily?
+      allData.daily
+    else
+      []
+
   render: ->
-    chart = @get('chart')
+    data = @get('data')
+    if !data || data.length == 0
+      @observe 'data', => @render()
+      return
+
+    for date, obj of data
+      daysData = ({rating: k, count: v} for k, v of obj)
+      @renderChart(daysData, date)
+
+    console.log 'rendered'
+    @fire('ready')
+
+  renderChart: (data, date) ->
+    return unless node = @get('node')
+    chart = d3.select(node)
+        .append('svg:svg')
+          .attr('class', 'chart daily')
+          .attr('width', @get('width'))
+          .attr('height', @get('height'))
+
     w = @get('width')
     barWidth = w / 5
     h = @get('height')
-    #data = @get('data')
 
     topPadding = 15
-    bottomPadding = 15
+    bottomPadding = 30
     barsHeight = h - topPadding - bottomPadding
 
     x = d3.scale.linear()
@@ -73,6 +97,13 @@ class Ask.RatingDistributionView extends Ask.D3View
       .attr("y2", barsHeight + topPadding - .5)
       .attr("stroke", "#000")
 
-    console.log 'rendered'
-    @fire('ready')
+    # Date
+    chart.append("svg:text")
+      .attr('class', 'x_axis_label')
+      .text("Ratings for #{date}")
+      .attr("x", w / 2)
+      .attr("y", h - 10)
+      .attr("dx", 0)
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
 

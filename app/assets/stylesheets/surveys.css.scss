@@ -3,6 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .chart {
+  &.daily {
+    margin-right: 20px;
+  }
+
   shape-rendering: crisp-edges;
   rect {
     stroke: white;

@@ -15,9 +15,10 @@
   <tr data-foreach-question="survey.questions">
     <td data-bind="question.text"></td>
     <td>
-      <a class="btn small primary">More Info</a>
-      <a class="btn small info">Edit</a>
-      <a class="btn small danger">Destroy</a>
+      <a class="btn small primary disabled">More Info</a>
+      <a class="btn small info disabled">Edit</a>
+      <a class="btn small danger disabled">Destroy</a>
+      <a class="btn small info" data-route="survey/analyze">Analyze</a>
     </td>
   </tr>
 </table>
@@ -35,8 +36,8 @@
       <span data-showif="answer.rated?" data-bind="answer.numeric_rating | append ')' | prepend '('"></span>
     </td>
     <td>
-      <a class="btn small primary">More Info</a>
-      <a class="btn danger small" data-event-click="response.destroy">Destroy</a>
+      <a class="btn small primary disabled">More Info</a>
+      <a class="btn danger small disabled" data-event-click="response.destroy">Destroy</a>
     </td>
   </tr>
 </table>

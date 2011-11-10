@@ -1,38 +1,36 @@
 #= require ../../d3_view
-data = [
-  {date: 0, rating: 3.7},
-  {date: 1, rating: 4},
-  {date: 2, rating: 4.5},
-  {date: 3, rating: 5},
-  {date: 4, rating: 4.9},
-  {date: 5, rating: 4.8},
-  {date: 6, rating: 4.9},
-  {date: 7, rating: 4.8}
-]
 
 class Ask.RatingOverTimeView extends Ask.D3View
   width: 600
   height: 200
 
-  @accessor 'data', -> @get('renderContext').findKey('currentStats')[0] || []
+  @accessor 'data', ->
+    allData = @get('renderContext').findKey('currentStats')[0]
+    if allData? && allData.monthly?
+      ({date: k, rating: v} for k, v of allData.monthly)
+    else
+      []
+
   render: ->
     node = @get('node')
-    chart = @get('chart')
+    chart = @get('chart').attr('class', 'chart monthly')
+    data = @get('data')
+    if !data || data.length == 0
+      @observe 'data', => @render()
+      return
 
-    #data = @get('data')
-    #if !data || data.length == 0
-      #@observe 'data', => @render()
-      #return
-
-    marginLeft = 15
-    marginBottom = 20
+    marginLeft = 25
+    marginBottom = 35
     marginTop = 10
 
     w = @get('width')
     h = @get('height')
 
+    minDate = d3.min(data.map (d) -> d.date)
+    maxDate = d3.max(data.map (d) -> d.date)
+
     x = d3.scale.linear()
-      .domain([0, data.length-1])
+      .domain([minDate, maxDate])
       .range([marginLeft, w])
 
     y = d3.scale.linear()
@@ -41,7 +39,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
 
     # Line
     line = d3.svg.line()
-      .x((d, i) -> x(i))
+      .x((d) -> x(d.date))
       .y((d) -> y(d.rating))
 
     chart.append("svg:path")
@@ -49,7 +47,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
 
     # Lines for axis
     chart.append("svg:line")
-      .attr("x1", x(0))
+      .attr("x1", marginLeft)
       .attr("y1", y(0) - 0.5)
       .attr("x2", w)
       .attr("y2", y(0) - 0.5)
@@ -67,7 +65,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
       .attr("class", "xLabel")
       .text(String)
       .attr("x", (d) -> x(d))
-      .attr("y", 0)
+      .attr("y", (h - marginBottom + 15))
       .attr("text-anchor", "middle")
 
     chart.selectAll(".yLabel")
@@ -75,7 +73,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
       .enter().append("svg:text")
       .attr("class", "yLabel")
       .text(String)
-      .attr("x", 0)
+      .attr("x", marginLeft - 10)
       .attr("y", (d) -> y(d))
       .attr("text-anchor", "right")
       .attr("dy", 4)
@@ -94,9 +92,31 @@ class Ask.RatingOverTimeView extends Ask.D3View
       .data(y.ticks(5))
       .enter().append("svg:line")
       .attr("class", "yTicks")
-      .attr("y1", y)
-      .attr("x1", x(0) - 2.5)
-      .attr("y2", y)
-      .attr("x2", x(0) + 2.5)
+      .attr("y1", (d) -> y(d) - 0.5)
+      .attr("x1", marginLeft - 2.5)
+      .attr("y2", (d) -> y(d) - 0.5)
+      .attr("x2", marginLeft + 2.5)
+
+    # Axis labels
+    chart.append("svg:text")
+      .attr('class', 'x_axis_label')
+      .text("Day of the year")
+      .attr("x", w / 2)
+      .attr("y", h - 10)
+      .attr("dx", 0)
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+
+    label_x = marginLeft - 20
+    label_y = h / 2
+    chart.append("svg:text")
+      .attr('class', 'x_axis_label')
+      .text("Average Rating")
+      .attr("x", label_x)
+      .attr("y", label_y)
+      .attr("dx", 0)
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90 #{label_x},#{label_y})")
 
     @fire('ready')
