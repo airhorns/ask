@@ -8,6 +8,10 @@ gem 'jquery-rails', :git => 'https://github.com/evanwalsh/jquery-rails.git'
 gem 'batman-rails'
 gem 'twilio-ruby'
 
+# Demo
+gem 'factory_girl_rails' # needed everywhere for seeds
+gem 'timecop'
+
 group :assets do
   gem 'sass-rails',   '~> 3.1.4'
   gem 'coffee-rails', '~> 3.1.1'
@@ -25,8 +29,6 @@ group :development, :test do
   gem 'pry'
   gem 'heroku'
   gem 'foreman'
-  gem 'factory_girl_rails' # needed everywhere for seeds
-  gem 'timecop'
 end
 
 group :test do
