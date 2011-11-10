@@ -4,7 +4,7 @@ gem 'rails', '3.1.1'
 
 gem 'devise'
 gem 'twitter-bootstrap-rails'
-gem 'jquery-rails', :git => 'https://github.com/evanwalsh/jquery-rails.git'
+gem 'jquery-rails'
 gem 'batman-rails'
 gem 'twilio-ruby'
 
