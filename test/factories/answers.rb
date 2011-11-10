@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   sequence :answer_text do |n|
-    words = %w[ yes no maybe so ]
-    words[rand 4]
+    words = %w[ yes no maybe ]
+    words[rand 3]
   end
 
   sequence :rated_answer_text do |n|

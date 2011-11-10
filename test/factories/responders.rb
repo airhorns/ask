@@ -2,7 +2,11 @@
 
 FactoryGirl.define do
   sequence :phone_number do |n|
-    "+#{n}"
+    s = "+"
+    10.times do
+      s += rand(9).to_s
+    end
+    s
   end
 
   factory :responder do

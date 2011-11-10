@@ -3,9 +3,12 @@
 
 FactoryGirl.define do
   sequence :question do |n|
-    traits = %w[ color age race gender height weight pantssize animal]
-    # randomly select a name from the names array for the email, so you might get "Bob1@somewhere.com"
-    "What #{traits[n % traits.length]} are you?"
+    questions = [
+      "Thanks for the rating! What did we do awesome? What can we do better?",
+      "Based on your experience today, would you recommend us to a friend? (Yes or no?)",
+      "Do you have any other comments or suggestions?"
+    ]
+    questions[n % questions.size]
   end
 
   sequence :question_order
