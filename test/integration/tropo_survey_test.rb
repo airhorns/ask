@@ -1,6 +1,14 @@
 require 'test_helper'
 
-class TwilioSurveyTest < ActionDispatch::IntegrationTest
+def tropo_params(from, to, body)
+  {"session" => {
+    "initialText" => body,
+    "from" => {"id" => from.gsub(/^[0-9]/, '')},
+    "to" => {"id" => to.gsub(/^[0-9]/, '')}
+  }}
+end
+
+class TropoSurveyTest < ActionDispatch::IntegrationTest
   setup do
     @responder = FactoryGirl.create(:responder)
   end
@@ -9,7 +17,7 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        post "/api/tropo/receive.json", tropo_params(@survey.phone_number, @responder.phone_number, "Yes")
       end
     end
 
@@ -21,7 +29,7 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        post "/api/tropo/receive.json",  tropo_params(@survey.phone_number, @responder.phone_number, "Yes")
       end
     end
     assert_response :success
@@ -30,14 +38,17 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
   test "should error if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
 
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+    post "/api/tropo/receive.json",  tropo_params(@survey.phone_number, @responder.phone_number, "Yes")
+
     assert_response :success
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "No"}
+    post "/api/tropo/receive.json",  tropo_params(@survey.phone_number, @responder.phone_number, "Yes")
+
     assert_response :success
   end
 
   test "should error if the user tries to answer a non existant survey" do
-    post "/api/twilio/receive/404.xml", {:From => @responder.phone_number, :Body => "Yes"}
+    post "/api/tropo/receive.json",  tropo_params("+1234", @responder.phone_number, "Yes")
     assert_response :success
   end
 end
+

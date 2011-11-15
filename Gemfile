@@ -7,6 +7,7 @@ gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'batman-rails'
 gem 'twilio-ruby'
+gem 'tropo-webapi-ruby'
 
 # Demo
 gem 'factory_girl_rails' # needed everywhere for seeds
@@ -30,6 +31,7 @@ group :development, :test do
   gem 'pry'
   gem 'heroku'
   gem 'foreman'
+  gem 'timecop'
 end
 
 group :test do

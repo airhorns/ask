@@ -6,7 +6,7 @@ class Response < ActiveRecord::Base
 
   validates_presence_of :survey, :responder
 
-  def self.for(survey, responder)
+  def self.for_survey_and_responder(survey, responder)
     attrs = {:survey_id => survey.id, :responder_id => responder.id}
     existing = self.where(attrs).first
     if !existing.nil?
@@ -17,11 +17,14 @@ class Response < ActiveRecord::Base
   end
 
   def unanswered_questions
-    survey.questions.joins("LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.response_id = #{id}").where('answers.id IS NULL')
+    survey.questions
+      .joins("LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.response_id = #{id}")
+      .where('answers.id IS NULL')
+      .order('"questions"."order"')
   end
 
   def next_question
-    unanswered_questions.order('"questions"."order"').first
+    unanswered_questions.first
   end
 
   def step!(text)

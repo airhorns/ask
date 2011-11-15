@@ -5,8 +5,10 @@ Ask::Application.routes.draw do
 
   scope '/api/twilio', :as => 'twilio' do
     match '/receive/:phone_number' => "twilio#receive"
-    match '/error' => "twilio#error"
-    match '/finished/:phone_number' => "twilio#finished", :as => 'finished'
+  end
+
+  scope '/api/tropo', :as => 'tropo' do
+    match '/receive' => "tropo#receive"
   end
 
   root :to => "dashboard#app"

@@ -1,19 +1,20 @@
 require 'test_helper'
 
-class TwilioSurveyTest < ActionDispatch::IntegrationTest
+class ResponseManagerTest < ActiveSupport::TestCase
   setup do
     @responder = FactoryGirl.create(:responder)
   end
+
   test "should allow the first question to be answered" do
     @survey = FactoryGirl.create(:survey_with_many_questions)
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+        @manager.step!("Yes")
+        assert !@manager.error?
       end
     end
-
-    assert_response :success
   end
 
   test "should allow the last question to be answered" do
@@ -21,23 +22,25 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+        assert !@manager.finished?
+        @manager.step!("Yes")
+        assert !@manager.error?
+        assert @manager.finished?
       end
     end
-    assert_response :success
   end
 
   test "should error if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
-
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
-    assert_response :success
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "No"}
-    assert_response :success
+    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager.step!("Yes")
+    @manager.step!("Yes")
+    assert @manager.error?
   end
 
   test "should error if the user tries to answer a non existant survey" do
-    post "/api/twilio/receive/404.xml", {:From => @responder.phone_number, :Body => "Yes"}
-    assert_response :success
+    @manager = ResponseManager.new(@responder.phone_number, "+1404")
+    assert @manager.error?
   end
 end
