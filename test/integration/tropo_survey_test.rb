@@ -47,8 +47,12 @@ class TropoSurveyTest < ActionDispatch::IntegrationTest
   end
 
   test "should error if the user tries to answer a non existant survey" do
-    post "/api/tropo/receive.json",  tropo_params("+1234", @responder.phone_number, "Yes")
-    assert_response :success
+    assert_no_difference('Response.count') do
+      assert_no_difference('Answer.count') do
+        post "/api/tropo/receive.json",  tropo_params("+1234", @responder.phone_number, "Yes")
+        assert_response :success
+      end
+    end
   end
 end
 

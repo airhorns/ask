@@ -4,5 +4,6 @@ FactoryGirl.define do
 
   factory :response do
     association :responder
+    complete false
   end
 end

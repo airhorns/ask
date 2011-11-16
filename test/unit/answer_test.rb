@@ -1,10 +1,7 @@
 require 'test_helper'
 
 class AnswerTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  #
+
   def setup
     @question = FactoryGirl.create(:rating_question_with_survey)
     @response = FactoryGirl.create(:response, :survey => @question.survey)

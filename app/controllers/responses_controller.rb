@@ -2,7 +2,11 @@ class ResponsesController < ApplicationController
   respond_to :json
 
   def index
-    @responses = Survey.includes(:responses => [:responder, {:answers => [:question, :rating]}]).find(params[:survey_id]).responses.order('id DESC').limit(50)
+    @responses = Survey.find(params[:survey_id]).responses.order('id DESC').limit(50).includes([
+      {:survey => :questions},
+      :responder,
+      {:answers => [:question, :rating]}
+    ])
 
     respond_with @responses
   end

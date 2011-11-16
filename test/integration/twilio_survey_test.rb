@@ -37,7 +37,11 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
   end
 
   test "should error if the user tries to answer a non existant survey" do
-    post "/api/twilio/receive/404.xml", {:From => @responder.phone_number, :Body => "Yes"}
-    assert_response :success
+    assert_no_difference('Response.count') do
+      assert_no_difference('Answer.count') do
+        post "/api/twilio/receive/404.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        assert_response :success
+      end
+    end
   end
 end

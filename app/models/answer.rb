@@ -2,6 +2,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :response
   has_one :rating, :class_name => 'AnswerMetaData', :conditions => {:key => 'rating'}
+  has_many :meta_datas, :class_name => 'AnswerMetaData'
   validates_presence_of :question, :response, :text
 
   validates_associated :rating, :if => :rated?

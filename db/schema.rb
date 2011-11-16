@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106212046) do
+ActiveRecord::Schema.define(:version => 20111116053410) do
 
   create_table "answer_meta_data", :force => true do |t|
     t.integer  "answer_id"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20111106212046) do
     t.integer  "survey_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "complete"
   end
 
   create_table "surveys", :force => true do |t|
