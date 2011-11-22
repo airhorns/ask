@@ -32,6 +32,7 @@ group :development, :test do
   gem 'heroku'
   gem 'foreman'
   gem 'timecop'
+  gem 'mongrel', '>= 1.2.0.pre2'
 end
 
 group :test do

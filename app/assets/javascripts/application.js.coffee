@@ -9,9 +9,9 @@
 #= require twitter/bootstrap
 
 # Batman.js and its adapters
-#/= require batman/batman
-#/= require batman/batman.jquery
-#/= require batman/batman.rails
+# w= require batman/batman
+# w= require batman/batman.jquery
+# w= require batman/batman.rails
 
 #= require batman_dev/batman
 #= require batman_dev/batman.jquery
@@ -20,6 +20,7 @@
 #= require helpers/pluralize_helper
 #= require ask
 
+#= require ./models/model
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./helpers

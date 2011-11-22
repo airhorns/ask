@@ -1,0 +1,20 @@
+<div>
+  <div class="page-header">
+    <h1>Response #<span data-bind="response.id"></span></h1>
+    <p>
+      <a data-bind="response.responder.phone_number" data-route="response.responder"></a>
+      responded to this survey
+      "<a data-route="response.survey" data-bind="response.survey.name"></a>"
+      at
+      <span data-bind="response.created_at"></span>.
+    </p>
+  </div>
+
+  <h2>Answers</h2>
+  <div data-foreach-question="response.survey.questions" data-context-answer="response.answers.indexedByUnique.question_id | get question.id" class="answer">
+    <p><span data-bind="question.text"></span> <small>(<a data-route="question">see question</a>)</small></p>
+    <h4 data-bind="answer.text"></h4>
+  </div>
+
+  <a class="btn small" data-route="response.survey">Back to survey</a>
+</div>

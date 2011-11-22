@@ -3,6 +3,7 @@ window.Ask = class Ask extends Batman.App
   Batman.View::prefix = 'assets/views'
 
   @resources 'survey'
+  @resources 'response'
   @route 'surveys/:id/analyze', "surveys#analyze", {resource: 'surveys', action: 'analyze'}
   @root 'dashboard#index'
 

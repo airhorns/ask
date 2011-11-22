@@ -1,4 +1,4 @@
-class Ask.Responder extends Batman.Model
+class Ask.Responder extends Ask.Model
   @storageKey: 'responders'
   @persist Batman.RailsStorage
 

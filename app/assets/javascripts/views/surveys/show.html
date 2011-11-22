@@ -23,21 +23,21 @@
   </tr>
 </table>
 <h2>Responses</h2>
-<table>
+<table class="responses">
   <tr>
     <th>Responder</th>
     <th data-foreach-question="survey.questions.sortedBy.order" data-bind="question.text | truncate 1000"></th>
     <th>Actions</th>
   </tr>
   <tr data-foreach-response="survey.responses">
-    <td data-bind="response.responder.phone_number"></td>
-    <td data-foreach-question="survey.questions.sortedBy.order" data-context-answer="response.answers.indexedBy.question_id | get question.id | get 'toArray.0'">
+    <td><a data-route="response.responder" data-bind="response.responder.phone_number"></a></td>
+    <td data-foreach-question="survey.questions.sortedBy.order" data-context-answer="response.answers.indexedByUnique.question_id | get question.id">
       <span data-bind="answer.text"></span>
       <span data-showif="answer.rated?" data-bind="answer.numeric_rating | append ')' | prepend '('"></span>
     </td>
-    <td>
-      <a class="btn small primary disabled">More Info</a>
-      <a class="btn danger small disabled" data-event-click="response.destroy">Destroy</a>
+    <td class="actions_column">
+      <a class="btn small primary" data-route="response">More Info</a>
+      <a class="btn danger small" data-event-click="response.destroy">Destroy</a>
     </td>
   </tr>
 </table>

@@ -1,4 +1,4 @@
-class Ask.Survey extends Batman.Model
+class Ask.Survey extends Ask.Model
   @storageKey: 'surveys'
   @persist Batman.RailsStorage
 
