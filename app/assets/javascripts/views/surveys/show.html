@@ -1,8 +1,10 @@
 <h1>Survey: <span data-bind="survey.name"></span></h1>
 <dl>
-  <dt>Phone:</dt>
+  <dt>Public Phone number:</dt>
   <dd data-bind="survey.phone_number"></dd>
-  <dt>Active:</dt>
+  <dt>Responses received:</dt>
+  <dd data-bind="survey.responses_count"></dd>
+  <dt>Currently Active:</dt>
   <dd data-bind="survey.active"></dd>
 </dl>
 
@@ -29,7 +31,7 @@
     <th data-foreach-question="survey.questions.sortedBy.order" data-bind="question.text | truncate 1000"></th>
     <th>Actions</th>
   </tr>
-  <tr data-foreach-response="survey.responses">
+  <tr data-foreach-response="paginatedResponses">
     <td><a data-route="response.responder" data-bind="response.responder.phone_number"></a></td>
     <td data-foreach-question="survey.questions.sortedBy.order" data-context-answer="response.answers.indexedByUnique.question_id | get question.id">
       <span data-bind="answer.text"></span>
@@ -37,8 +39,25 @@
     </td>
     <td class="actions_column">
       <a class="btn small primary" data-route="response">More Info</a>
-      <a class="btn danger small" data-event-click="response.destroy">Destroy</a>
+      <a class="btn danger small" data-event-click="response.destroy" data-confirm="Are you sure you want to destroy this response? You can't undo this!">Destroy</a>
     </td>
   </tr>
 </table>
-<a href="#" onclick="return false">Next Page...</a>
+<div class="pagination">
+  <ul>
+    <li class="prev" data-addclass-disabled="paginatedResponses.page | equals 1">
+      <a data-bind-href="'#!/surveys/' | append survey.id | append '?page=1'">First</a>
+    </li>
+    <li data-addclass-disabled="paginatedResponses.page | equals previousPage">
+      <a data-bind-href="'#!/surveys/' | append survey.id | append '?page=' | append previousPage">&larr; Previous</a>
+    </li>
+    <li data-foreach-page="responsePages" data-addclass-active="page | equals paginatedResponses.page">
+      <a data-bind-href="'#!/surveys/' | append survey.id | append '?page=' | append page" data-bind="page"></a>
+    </li>
+    <li data-addclass-disabled="paginatedResponses.page | equals paginatedResponses.pageCount">
+      <a data-bind-href="'#!/surveys/' | append survey.id | append '?page=' | append nextPage">Next &rarr;</a>
+    <li class="next" data-addclass-disabled="paginatedResponses.page | equals paginatedResponses.pageCount">
+      <a data-bind-href="'#!/surveys/' | append survey.id | append '?page=' | append paginatedResponses.pageCount">Last</a>
+    </li>
+  </ul>
+</div>

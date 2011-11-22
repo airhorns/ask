@@ -1,5 +1,5 @@
 class Response < ActiveRecord::Base
-  belongs_to :survey
+  belongs_to :survey, :counter_cache => true
   belongs_to :responder
   has_many :questions, :through => :survey
   has_many :answers

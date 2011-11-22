@@ -4,4 +4,4 @@ class Ask.Survey extends Ask.Model
 
   @hasMany 'questions'
   @hasMany 'responses'
-  @encode 'name', 'active', 'phone_number', 'response_count'
+  @encode 'name', 'active', 'phone_number', 'responses_count'

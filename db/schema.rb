@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111116053410) do
+ActiveRecord::Schema.define(:version => 20111122030615) do
 
   create_table "answer_meta_data", :force => true do |t|
     t.integer  "answer_id"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20111116053410) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "responses_count"
   end
 
 end

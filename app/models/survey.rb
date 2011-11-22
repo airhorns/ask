@@ -10,10 +10,6 @@ class Survey < ActiveRecord::Base
   scope :active, where(:active => true)
 
   def as_json(options = {})
-    super({:include => [:questions], :methods => [:response_count]}.merge(options))
-  end
-
-  def response_count
-    responses.count
+    super({:include => [:questions]}.merge(options))
   end
 end
