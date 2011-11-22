@@ -26,7 +26,7 @@ class Ask.SurveysController extends Batman.Controller
         @set 'paginatedResponses', new ResponsePaginator
           survey: survey
           totalCount: survey.get('responses_count')
-          page: params.page
+          page: params.page || 1
 
         @_generatePages()
 
