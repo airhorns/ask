@@ -1,7 +1,9 @@
 Ask::Application.routes.draw do
 
-  devise_for :customers
+  ActiveAdmin.routes(self)
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  devise_for :customers
 
   scope '/api/twilio', :as => 'twilio' do
     match '/receive/:phone_number' => "twilio#receive"
