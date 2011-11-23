@@ -8,6 +8,20 @@ class Answer < ActiveRecord::Base
   validates_associated :rating, :if => :rated?
   before_validation :build_rating_meta_data, :if => :rated?
 
+  scope :before, ->(before) {
+    scoped
+      .includes(:rating)
+      .where('created_at >= ?', before.to_date)
+  }
+
+  scope :after, ->(after) {
+    scoped
+      .includes(:rating)
+      .where('created_at <= ?', after.to_date)
+  }
+
+  scope :between, ->(before, after) { scoped.before(before).after(after) }
+
   def numeric_rating
     rating.try(:value).to_i
   end

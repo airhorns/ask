@@ -1,6 +1,7 @@
 #= require d3/d3
 #= require d3/d3.layout
 #= require d3/d3.chart
+#= require d3/d3.time
 
 class Ask.D3View extends Batman.View
   width: 100

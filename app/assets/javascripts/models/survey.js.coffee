@@ -4,4 +4,6 @@ class Ask.Survey extends Ask.Model
 
   @hasMany 'questions'
   @hasMany 'responses'
-  @encode 'name', 'active', 'phone_number', 'responses_count'
+  @encode 'name', 'active', 'phone_number', 'responses_count', 'current_week_responses_count', 'previous_week_responses_count'
+
+  @accessor 'firstRatedQuestion', -> @get('questions.indexedByUnique.rated?').get(true)

@@ -1,13 +1,5 @@
 #= require ../../d3_view
 
-#data = [
-  #{rating: 1, count: 10},
-  #{rating: 2, count: 23},
-  #{rating: 3, count: 34},
-  #{rating: 4, count: 45},
-  #{rating: 5, count: 50}
-#]
-
 class Ask.RatingDistributionView extends Ask.D3View
   width: 100
   height: 100

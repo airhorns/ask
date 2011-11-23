@@ -36,8 +36,7 @@ class Ask.SurveysController extends Batman.Controller
       @set 'survey', survey
 
   @accessor 'currentStats', ->
-    ratedQuestions = @get('survey.questions')
-    firstRatedQuestion = ratedQuestions.get('toArray.0')
+    firstRatedQuestion = @get('survey.firstRatedQuestion')
     if firstRatedQuestion
       firstRatedQuestion.get('stats')
     else
