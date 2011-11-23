@@ -16,19 +16,17 @@ class Ask.SurveysController extends Batman.Controller
     @set 'surveys', Ask.Survey.get('all')
 
   show: (params) ->
-    if params.id == String(@get('survey.id'))
-      @set 'paginatedResponses.page', String(params.page)
+    go = =>
+      @set 'paginatedResponses.page', String(params.page || 1)
       @_generatePages()
+
+    if params.id == String(@get('survey.id'))
+      go()
     else
       Ask.Survey.find params.id, (err, survey) =>
         throw err if err
         @set 'survey', survey
-        @set 'paginatedResponses', new ResponsePaginator
-          survey: survey
-          totalCount: survey.get('responses_count')
-          page: params.page || 1
-
-        @_generatePages()
+        go()
 
   analyze: (params) ->
     Ask.Survey.find params.id, (err, survey) =>
@@ -51,3 +49,8 @@ class Ask.SurveysController extends Batman.Controller
     @set 'nextPage', Math.min(current + 1, total)
     @set 'previousPage', Math.max(current - 1, 1)
 
+  @accessor 'paginatedResponses', ->
+    new ResponsePaginator
+      survey: @get('survey')
+      totalCount: @get('survey.responses_count')
+      page: 1

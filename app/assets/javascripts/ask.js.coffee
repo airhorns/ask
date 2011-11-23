@@ -5,7 +5,7 @@ window.Ask = class Ask extends Batman.App
   @resources 'survey'
   @resources 'response'
   @route 'surveys/:id/analyze', "surveys#analyze", {resource: 'surveys', action: 'analyze'}
-  @root 'dashboard#index'
+  @root 'surveys#index'
 
   @on 'run', ->
     console?.log "Running ...."

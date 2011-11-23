@@ -2,7 +2,7 @@
 
 class Ask.RatingDistributionView extends Ask.D3View
   width: 100
-  height: 100
+  height: 150
 
   @accessor 'data', ->
     allData = @get('renderContext').findKey('currentStats')[0]
@@ -90,9 +90,10 @@ class Ask.RatingDistributionView extends Ask.D3View
       .attr("stroke", "#000")
 
     # Date
+    format = d3.time.format("%Y-%m-%d")
     chart.append("svg:text")
       .attr('class', 'x_axis_label')
-      .text("Ratings for #{date}")
+      .text("for #{format(@constructor.railsDateParser.parse(date))}")
       .attr("x", w / 2)
       .attr("y", h - 10)
       .attr("dx", 0)

@@ -21,7 +21,7 @@ class QuestionStats
   end
 
   def calculate_monthly_trend
-    mapped = @question.answers.before(7.days.ago).reduce({}) do |acc, answer|
+    mapped = @question.answers.before(30.days.ago).reduce({}) do |acc, answer|
       key = answer.created_at.beginning_of_day
       acc[key] ||= []
       acc[key].push answer.numeric_rating.to_i

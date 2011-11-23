@@ -6,9 +6,8 @@ class Ask.RatingOverTimeView extends Ask.D3View
 
   @accessor 'data', ->
     allData = @get('renderContext').findKey('currentStats')[0]
-    formatter = d3.time.format("%Y-%m-%d %H:%M:%S UTC")
     if allData? && allData.monthly?
-      ({date: formatter.parse(k), rating: v} for k, v of allData.monthly)
+      ({date: @constructor.railsDateParser.parse(k), rating: v} for k, v of allData.monthly)
     else
       []
 
@@ -34,8 +33,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
       .domain([minDate, maxDate])
       .range([marginLeft, w])
 
-    xTicks = x.ticks(8)
-    xTickFormatter = x.tickFormat(8)
+    xTicks = x.ticks(d3.time.days, 4)
 
     y = d3.scale.linear()
       .domain([0, 5])
@@ -67,7 +65,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
       .data(xTicks)
       .enter().append("svg:text")
       .attr("class", "xLabel")
-      .text(xTickFormatter)
+      .text(d3.time.format("%b %e"))
       .attr("x", x)
       .attr("y", (h - marginBottom + 15))
       .attr("text-anchor", "middle")
@@ -84,7 +82,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
 
     # Axis ticks
     chart.selectAll(".xTicks")
-      .data(x.ticks(10))
+      .data(xTicks)
       .enter().append("svg:line")
       .attr("class", "xTicks")
       .attr("x1", x)
@@ -104,7 +102,7 @@ class Ask.RatingOverTimeView extends Ask.D3View
     # Axis labels
     chart.append("svg:text")
       .attr('class', 'x_axis_label')
-      .text("Day of the year")
+      .text("Date")
       .attr("x", w / 2)
       .attr("y", h - 10)
       .attr("dx", 0)

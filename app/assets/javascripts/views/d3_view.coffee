@@ -6,7 +6,7 @@
 class Ask.D3View extends Batman.View
   width: 100
   height: 100
-
+  @railsDateParser = d3.time.format("%Y-%m-%d %H:%M:%S UTC")
   @accessor 'renderContext', -> Batman.RenderContext.start(@get('contexts')...)
   @accessor 'chart'
     get: ->
