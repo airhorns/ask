@@ -25,7 +25,16 @@ class Question < ActiveRecord::Base
   end
 
   def answer_rate
-    answers_count.to_f / survey.responses.count
+    rate = ((answers_count || 0).to_f / survey.responses.count)
+    if rate.nan?
+      0
+    else
+      rate
+    end
+  end
+
+  def answers_count
+    super || 0
   end
 
   private

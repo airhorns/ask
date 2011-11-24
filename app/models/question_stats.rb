@@ -35,12 +35,14 @@ class QuestionStats
 
   def calculate_current_week_average
     ratings = @question.answers.before(7.days.ago).map(&:numeric_rating)
-    ratings.sum.to_f / ratings.size
+    val = ratings.sum.to_f / ratings.size
+    de_nan(val)
   end
 
   def calculate_previous_week_average
     ratings = @question.answers.between(14.days.ago, 7.days.ago).map(&:numeric_rating)
-    ratings.sum.to_f / ratings.size
+    val = ratings.sum.to_f / ratings.size
+    de_nan(val)
   end
 
   def as_json(options = {})
@@ -53,6 +55,16 @@ class QuestionStats
         'current_week_average' => calculate_current_week_average,
         'previous_week_average' => calculate_previous_week_average
       }
+    end
+  end
+
+  private
+
+  def de_nan(val)
+    if val.to_f.nan?
+      0
+    else
+      val
     end
   end
 end

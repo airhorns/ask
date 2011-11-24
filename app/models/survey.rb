@@ -25,4 +25,8 @@ class Survey < ActiveRecord::Base
   def previous_week_responses_count
     responses.where("created_at >= ? AND created_at <= ?", 14.days.ago, 7.days.ago).count
   end
+
+  def responses_count
+    super || 0
+  end
 end

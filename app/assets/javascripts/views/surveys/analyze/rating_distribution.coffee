@@ -11,11 +11,12 @@ class Ask.RatingDistributionView extends Ask.D3View
     else
       []
 
+  constructor: ->
+    super
+    @observe 'data', => @render()
+
   render: ->
     data = @get('data')
-    if !data || data.length == 0
-      @observe 'data', => @render()
-      return
 
     for date, obj of data
       daysData = ({rating: k, count: v} for k, v of obj)

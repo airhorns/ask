@@ -23,7 +23,12 @@ class Answer < ActiveRecord::Base
   scope :between, ->(before, after) { scoped.before(before).after(after) }
 
   def numeric_rating
-    rating.try(:value).to_i
+    value = rating.try(:value).to_i
+    if value.to_f.nan?
+      0
+    else
+      value
+    end
   end
 
   def serializable_hash(options = {})

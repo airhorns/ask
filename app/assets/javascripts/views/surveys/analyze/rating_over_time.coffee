@@ -11,13 +11,14 @@ class Ask.RatingOverTimeView extends Ask.D3View
     else
       []
 
+  constructor: ->
+    super
+    @observe 'data', => @render()
+
   render: ->
     node = @get('node')
     chart = @get('chart').attr('class', 'chart monthly')
     data = @get('data')
-    if !data || data.length == 0
-      @observe 'data', => @render()
-      return
 
     marginLeft = 25
     marginBottom = 35

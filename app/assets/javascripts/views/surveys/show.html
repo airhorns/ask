@@ -1,12 +1,20 @@
 <h1>Survey: <span data-bind="survey.name"></span></h1>
-<dl>
-  <dt>Public Phone number:</dt>
-  <dd data-bind="survey.phone_number"></dd>
-  <dt>Responses received:</dt>
-  <dd data-bind="survey.responses_count"></dd>
-  <dt>Currently Active:</dt>
-  <dd data-bind="survey.active"></dd>
-</dl>
+<div class="row">
+  <div class="span12">
+    <dl>
+      <dt>Public Phone number:</dt>
+      <dd data-bind="survey.phone_number"></dd>
+      <dt>Responses received:</dt>
+      <dd data-bind="survey.responses_count"></dd>
+      <dt>Currently Active:</dt>
+      <dd data-bind="survey.active"></dd>
+    </dl>
+  </div>
+  <div class="span4">
+    <a class="btn danger disabled" data-route="survey/edit">Edit</a>
+    <a class="btn info" data-route="survey/analyze">Analyze</a>
+  </div>
+</div>
 
 <h2>Questions</h2>
 <table>
