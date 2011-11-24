@@ -2,31 +2,34 @@
 
 class Ask.RatingDistributionView extends Ask.D3View
   width: 100
-  height: 150
+  height: 100
 
   @accessor 'data', ->
-    allData = @get('renderContext').findKey('currentStats')[0]
+    allData = @get('context').findKey('currentStats')[0]
     if allData? && allData.daily?
       allData.daily
     else
       []
 
-  constructor: ->
-    super
-    @observe 'data', => @render()
-
   render: ->
+    return unless node = @get('node')
     data = @get('data')
-
+    d3.select(node).selectAll('*').remove()
+    processed = {}
+    counts = []
     for date, obj of data
-      daysData = ({rating: k, count: v} for k, v of obj)
-      @renderChart(daysData, date)
+      processed[date] = for k, v of obj
+        counts.push v
+        {rating: k, count: v}
+
+    @maxCount = d3.max(counts) || 1
+    @renderChart(daysData, date) for date, daysData of processed
 
     console.log 'rendered'
     @fire('ready')
 
   renderChart: (data, date) ->
-    return unless node = @get('node')
+    node = @get('node')
     chart = d3.select(node)
         .append('svg:svg')
           .attr('class', 'chart daily')
@@ -40,13 +43,12 @@ class Ask.RatingDistributionView extends Ask.D3View
     topPadding = 15
     bottomPadding = 30
     barsHeight = h - topPadding - bottomPadding
-
     x = d3.scale.linear()
       .domain([0, 5])
       .range([0, @get('width')])
 
     y = d3.scale.linear()
-      .domain([0, 50])
+      .domain([0, @maxCount])
       .rangeRound([0, barsHeight])
 
     # Marks

@@ -17,3 +17,10 @@ class Ask.D3View extends Batman.View
           .attr('width', @get('width'))
           .attr('height', @get('height'))
     final: true
+
+
+  constructor: ->
+    super
+    @observe 'data', =>
+      @get('chart').selectAll('*').remove()
+      @render()

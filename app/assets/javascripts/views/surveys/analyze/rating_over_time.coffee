@@ -5,15 +5,11 @@ class Ask.RatingOverTimeView extends Ask.D3View
   height: 200
 
   @accessor 'data', ->
-    allData = @get('renderContext').findKey('currentStats')[0]
+    allData = @get('context').findKey('currentStats')[0]
     if allData? && allData.monthly?
       ({date: @constructor.railsDateParser.parse(k), rating: v} for k, v of allData.monthly)
     else
       []
-
-  constructor: ->
-    super
-    @observe 'data', => @render()
 
   render: ->
     node = @get('node')
