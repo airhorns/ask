@@ -1,7 +1,7 @@
 namespace :assets do
   desc "Installs some random data"
   task :produce do
-    branch_name = %x{git symbolic-ref HEAD 2>/dev/null}
+    branch_name = %x{git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3}
     system 'git checkout production && git merge master'
     Rake::Task['assets:precompile'].invoke
     system 'git add public/assets && git commit -m "Compiled assets for production."'
