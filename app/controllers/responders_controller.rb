@@ -1,5 +1,5 @@
-class RespondersController < ApplicationController
-  respond_to :json
+class RespondersController < ApiController
+  before_filter :authenticate_customer!
 
   def index
     @responders = Responder.all

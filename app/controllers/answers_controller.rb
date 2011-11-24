@@ -1,5 +1,5 @@
-class AnswersController < ApplicationController
-  respond_to :json
+class AnswersController < ApiController
+  before_filter :find_and_authorize_response!
 
   def index
     @answers = Response.find(params[:response_id]).answers
@@ -18,5 +18,11 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.json { head :ok }
     end
+  end
+
+  private
+
+  def find_and_authorize_response!
+    @response = Reponse.with_survey_owned_by(current_customer).find(params[:response_id])
   end
 end

@@ -1,37 +1,36 @@
 require 'twilio-ruby'
 
-class SurveysController < ApplicationController
-  respond_to :json
+class SurveysController < ApiController
+  include SurveyFinder
+  before_filter :find_and_authorize_survey!, :only => [:show, :update, :destroy]
 
   def index
-    @surveys = Survey.all
+    @surveys = Survey.active.owned_by(current_customer)
     respond_with @surveys
   end
 
   def show
-    @survey = Survey.find(params[:id])
     respond_with @survey
   end
 
   def new
-    @survey = Survey.new
+    @survey = Survey.new(:customer => current_customer)
     respond_with @survey
   end
 
   def create
     @survey = Survey.new(params[:survey])
+    @survey.customer = current_customer
     @survey.save
     respond_with @survey
   end
 
   def update
-    @survey = Survey.find(params[:id])
     @survey.update_attributes(params[:survey])
     respond_with @survey
   end
 
   def destroy
-    @survey = Survey.find(params[:id])
     @survey.destroy
     respond_to do |format|
       format.json { head :ok }
@@ -50,5 +49,11 @@ class SurveysController < ApplicationController
     respond_to do |format|
       format.json { head :ok }
     end
+  end
+
+  private
+
+  def survey_id_params_key
+    :id
   end
 end

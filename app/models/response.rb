@@ -12,6 +12,8 @@ class Response < ActiveRecord::Base
   scope :complete, where(:complete => true)
   scope :incomplete, where(:complete => false)
 
+  include OwnedBySurvey
+
   def self.for_survey_and_responder(survey, responder)
     attrs = {:survey_id => survey.id, :responder_id => responder.id}
     existing = self.incomplete.where(attrs).first

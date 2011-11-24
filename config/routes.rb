@@ -36,7 +36,6 @@ Ask::Application.routes.draw do
     resources :answers, :only => [:show, :destroy]
   end
 
-
   #match '*segments' => "dashboard#app"
 
   # The priority is based upon order of creation:

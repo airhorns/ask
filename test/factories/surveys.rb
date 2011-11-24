@@ -5,6 +5,7 @@ FactoryGirl.define do
     name "A test survey"
     phone_number "+1234"
     active true
+    association :customer
   end
 
   factory :survey_with_one_question, :parent => :survey do |survey|

@@ -4,6 +4,10 @@ class Question < ActiveRecord::Base
   has_many :responders, :through => :answers
   validates_presence_of :text, :order
 
+  attr_accessible :text, :order
+
+  include OwnedBySurvey
+
   def answer!(response, text)
     answer_for(response, text).save!
   end
