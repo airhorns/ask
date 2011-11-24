@@ -3,7 +3,7 @@ class Ask.Question extends Ask.Model
   @persist Batman.RailsStorage
 
   @belongsTo 'survey'
-  @encode 'text', 'order', 'rated?'
+  @encode 'text', 'order', 'rated?', 'answer_rate'
 
   @url: (options) ->
     survey_id = options.survey_id
@@ -21,3 +21,5 @@ class Ask.Question extends Ask.Model
         error: (error) => throw error
       return {}
     set: (_, data) -> @_stats = data
+
+  @accessor 'answerRateAsPercentage', -> Batman.Filters.round(@get('answer_rate') * 100, 2)

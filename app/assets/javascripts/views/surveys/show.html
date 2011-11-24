@@ -11,17 +11,12 @@
 <h2>Questions</h2>
 <table>
   <tr>
-    <th>Question Name</th>
-    <th>Actions</th>
+    <th>Question</th>
+    <th>Answer Rate</th>
   </tr>
   <tr data-foreach-question="survey.questions">
     <td data-bind="question.text"></td>
-    <td>
-      <a class="btn small primary disabled">More Info</a>
-      <a class="btn small info disabled">Edit</a>
-      <a class="btn small danger disabled">Destroy</a>
-      <a class="btn small info" data-route="survey/analyze">Analyze</a>
-    </td>
+    <td data-bind="question.answerRateAsPercentage | append ' %'"></td>
   </tr>
 </table>
 <h2>Responses</h2>

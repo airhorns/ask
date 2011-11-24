@@ -1,5 +1,5 @@
 class Answer < ActiveRecord::Base
-  belongs_to :question
+  belongs_to :question, :counter_cache => true
   belongs_to :response
   has_one :rating, :class_name => 'AnswerMetaData', :conditions => {:key => 'rating'}
   has_many :meta_datas, :class_name => 'AnswerMetaData'

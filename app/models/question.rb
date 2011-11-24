@@ -17,11 +17,15 @@ class Question < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    super({:methods => [:rated?]}.merge(options))
+    super({:methods => [:rated?, :answer_rate]}.merge(options))
   end
 
   def stats
     QuestionStats.new(self)
+  end
+
+  def answer_rate
+    answers_count.to_f / survey.responses.count
   end
 
   private
