@@ -27,7 +27,7 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should error if the user tries to answer more than the available questions" do
+  test "should behave if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
 
     post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}

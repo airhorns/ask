@@ -13,7 +13,7 @@ class ResponseManager
   end
 
   def step(body)
-    if !survey.nil?
+    @message = if !@survey.nil?
       @answer = @response.step(body)
       if !@answer.nil?
         if @answer.save

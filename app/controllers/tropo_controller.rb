@@ -7,11 +7,10 @@ class TropoController < ApplicationController
     from = params["session"]["from"]["id"]
     to = params["session"]["to"]["id"]
 
-    @manager = ResponseManager.new(from, to)
-    @manager.step!(body)
-
+    @message = ResponseManager.new(from, to).step(body)
+    puts @message
     t = Tropo::Generator.new
-    t.say(:value => @manager.message)
+    t.say(:value => @message)
     render :json => t.response
   end
 end

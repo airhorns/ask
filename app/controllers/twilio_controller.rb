@@ -4,8 +4,7 @@ class TwilioController < ApplicationController
 
   def receive
     @manager = ResponseManager.new(params[:From], params[:phone_number])
-    @manager.step!(params[:Body])
-    @message = @manager.message
+    @message = @manager.step(params[:Body])
     respond_with @message
   end
 end
