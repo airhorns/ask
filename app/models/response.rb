@@ -11,6 +11,7 @@ class Response < ActiveRecord::Base
 
   scope :complete, where(:complete => true)
   scope :incomplete, where(:complete => false)
+  scope :recent, ->(limit) { includes(:survey => :customer).order(:created_at).limit(limit) }
 
   include OwnedBySurvey
 

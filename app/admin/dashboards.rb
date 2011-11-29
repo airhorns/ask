@@ -3,18 +3,31 @@ ActiveAdmin::Dashboards.build do
   # Define your dashboard sections here. Each block will be
   # rendered on the dashboard in the context of the view. So just
   # return the content which you would like to display.
-  
+
   # == Simple Dashboard Section
   # Here is an example of a simple dashboard section
   #
-  #   section "Recent Posts" do
-  #     ul do
-  #       Post.recent(5).collect do |post|
-  #         li link_to(post.title, admin_post_path(post))
-  #       end
-  #     end
-  #   end
-  
+  section "Recent Responses" do
+    table do
+      tr do
+        th "Responder"
+        th "Survey"
+        th "Complete"
+        th "Created"
+        th "Actions"
+      end
+      Response.recent(5).collect do |response|
+        tr do
+          td link_to(response.responder.phone_number, admin_response_path(response))
+          td link_to("#{response.survey.name} (#{response.survey.customer.email})", admin_survey_path(response.survey))
+          td response.complete?
+          td response.created_at
+          td link_to("All responses by this person", admin_responder_path(response.responder))
+        end
+      end
+    end
+  end
+
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can
   # easily render a partial rather than build content in ruby.
@@ -24,7 +37,7 @@ ActiveAdmin::Dashboards.build do
   #       render 'recent_posts' # => this will render /app/views/admin/dashboard/_recent_posts.html.erb
   #     end
   #   end
-  
+
   # == Section Ordering
   # The dashboard sections are ordered by a given priority from top left to
   # bottom right. The default priority is 10. By giving a section numerically lower
