@@ -18,7 +18,7 @@ namespace :demo do
               response.step("#{"*" * (rand(5) + 1)}") # Answer the rating
             end
 
-            while response.step!(FactoryGirl.generate(:answer_text))
+            while response.step(FactoryGirl.generate(:answer_text))
               true
             end
           end
