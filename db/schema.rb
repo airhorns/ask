@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111124040038) do
+ActiveRecord::Schema.define(:version => 20111129032452) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(:version => 20111124040038) do
     t.datetime "updated_at"
   end
 
+  add_index "answers", ["response_id"], :name => "answer_response_id_ix"
+
   create_table "customers", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
@@ -100,6 +102,8 @@ ActiveRecord::Schema.define(:version => 20111124040038) do
     t.datetime "updated_at"
   end
 
+  add_index "responders", ["phone_number"], :name => "phone_number_ix"
+
   create_table "responses", :force => true do |t|
     t.integer  "responder_id"
     t.integer  "survey_id"
@@ -107,6 +111,10 @@ ActiveRecord::Schema.define(:version => 20111124040038) do
     t.datetime "updated_at"
     t.boolean  "complete"
   end
+
+  add_index "responses", ["responder_id"], :name => "responder_id_ix"
+  add_index "responses", ["survey_id", "responder_id"], :name => "index_responses_on_survey_id_and_responder_id"
+  add_index "responses", ["survey_id"], :name => "survey_id_ix"
 
   create_table "surveys", :force => true do |t|
     t.string   "name"
