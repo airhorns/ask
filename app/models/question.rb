@@ -8,10 +8,6 @@ class Question < ActiveRecord::Base
 
   include OwnedBySurvey
 
-  def answer!(response, text)
-    answer_for(response, text).save!
-  end
-
   def rated?
     false
   end
@@ -36,8 +32,6 @@ class Question < ActiveRecord::Base
   def answers_count
     super || 0
   end
-
-  private
 
   def answer_for(response, text)
     answers.build(:question => self, :response => response, :text => text)

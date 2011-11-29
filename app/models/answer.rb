@@ -22,6 +22,8 @@ class Answer < ActiveRecord::Base
 
   scope :between, ->(before, after) { scoped.before(before).after(after) }
 
+  after_save :check_response_completeness
+
   def numeric_rating
     value = rating.try(:value).to_i
     if value.to_f.nan?
@@ -66,4 +68,7 @@ class Answer < ActiveRecord::Base
     rate(parse_rating)
   end
 
+  def check_response_completeness
+    response.save
+  end
 end

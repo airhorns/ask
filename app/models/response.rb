@@ -2,7 +2,7 @@ class Response < ActiveRecord::Base
   belongs_to :survey, :counter_cache => true
   belongs_to :responder
   has_many :questions, :through => :survey
-  has_many :answers
+  has_many :answers, :dependent => :destroy
 
   validates_presence_of :survey, :responder
   validates :complete, :inclusion => { :in => [true, false] }
@@ -39,14 +39,11 @@ class Response < ActiveRecord::Base
     unanswered_questions.first
   end
 
-  def step!(text)
-    return false unless persisted?
+  def step(text)
+    return unless persisted?
     unanswered_question = next_question
     if unanswered_question
-      answer_question!(unanswered_question, text)
-      true
-    else
-      false
+      unanswered_question.answer_for(self, text)
     end
   end
 
@@ -58,23 +55,14 @@ class Response < ActiveRecord::Base
     check_completeness
   end
 
-  private
-
-  def answer_question!(question, text)
-    result = question.answer!(self, text)
-    if result
-      set_completeness
-      save! if changed?
-    end
-  end
-
-  def check_completeness
-    return (unanswered_questions.count == 0)
-  end
-
   def set_completeness
     self.complete = check_completeness
     true
   end
 
+  private
+
+  def check_completeness
+    return (unanswered_questions.count == 0)
+  end
 end

@@ -25,7 +25,7 @@ class ResponseTest < ActiveSupport::TestCase
     @response = Response.new(:survey => @survey, :responder => @responder)
     @response.save!
     @survey.questions.count.times do
-      @response.step!("Yes")
+      assert @response.step("Yes").save
     end
     assert @response.complete?
   end
@@ -44,18 +44,18 @@ class ResponseTest < ActiveSupport::TestCase
 
   test "for_survey_and_responder finds an existing incomplete response if some questions have been answered" do
     @response = Response.for_survey_and_responder(@survey, @responder)
-    assert @response.step!("Yes")
+    assert @response.step("Yes")
     next_response = Response.for_survey_and_responder(@survey, @responder)
     assert_equal @response, next_response
   end
 
-  test "for_survey_and_responder generates a new finds an incomplete response if only complete responses exist" do
+  test "for_survey_and_responder generates a new incomplete response if only complete responses exist" do
     @response = Response.for_survey_and_responder(@survey, @responder)
     until @response.complete?
-      assert @response.step!("Yes")
+      assert @response.step("Yes").save
     end
+    assert @response.complete?
     next_response = Response.for_survey_and_responder(@survey, @responder)
     assert_not_equal @response, next_response
   end
-
 end

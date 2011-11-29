@@ -11,7 +11,7 @@ class ResponseManagerTest < ActiveSupport::TestCase
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
         @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
-        @manager.step!("Yes")
+        @manager.step("Yes")
         assert !@manager.error?
       end
     end
@@ -24,7 +24,7 @@ class ResponseManagerTest < ActiveSupport::TestCase
       assert_difference('Answer.count') do
         @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
         assert !@manager.finished?
-        @manager.step!("Yes")
+        @manager.step("Yes")
         assert !@manager.error?
         assert @manager.finished?
       end
@@ -34,13 +34,24 @@ class ResponseManagerTest < ActiveSupport::TestCase
   test "should error if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
     @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
-    @manager.step!("Yes")
-    @manager.step!("Yes")
+    @manager.step("Yes")
+    @manager.step("Yes")
     assert @manager.error?
   end
 
   test "should error if the user tries to answer a non existant survey" do
     @manager = ResponseManager.new(@responder.phone_number, "+1404")
+    assert @manager.error?
+  end
+
+  test "should error if the user gives an invalid rating for a rated question" do
+    @survey = FactoryGirl.create(:survey_with_one_rating_question)
+    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager.step("10")
+    assert @manager.error?
+
+    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager.step("-4")
     assert @manager.error?
   end
 end
