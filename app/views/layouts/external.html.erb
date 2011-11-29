@@ -21,6 +21,16 @@
     <div class="sidebar">
     </div>
     <div class="content">
+      <% if flash[:error].present? %>
+      <div class="alert-message error">
+        <p><%= flash[:error] %></p>
+      </div>
+      <% end %>
+      <% if flash[:alert].present? %>
+      <div class="alert-message warning">
+        <p><%= flash[:alert] %></p>
+      </div>
+      <% end %>
       <%= yield %>
     </div>
     <footer>
