@@ -12,7 +12,7 @@ class Survey < ActiveRecord::Base
 
   accepts_nested_attributes_for :questions
 
-  attr_accessible :active, :name
+  attr_accessible :active, :name, :customer_id
 
   def as_json(options = {})
     super({:include => [:questions], :methods => [:current_week_responses_count, :previous_week_responses_count]}.merge(options))
