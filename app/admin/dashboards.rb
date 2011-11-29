@@ -22,7 +22,7 @@ ActiveAdmin::Dashboards.build do
           td link_to("#{response.survey.name} (#{response.survey.customer.email})", admin_survey_path(response.survey))
           td response.complete?
           td response.created_at
-          td link_to("All responses by this person", admin_responder_path(response.responder))
+          td #link_to("All responses by this person", admin_responder_path(response.responder))
         end
       end
     end
