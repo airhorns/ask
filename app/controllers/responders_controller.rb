@@ -11,12 +11,6 @@ class RespondersController < ApiController
     respond_with @responder
   end
 
-  def create
-    @responder = Responder.new(params[:responder])
-    @responder.save
-    respond_with @responder
-  end
-
   def update
     @responder = Responder.find(params[:id])
     @responder.update_attributes(params[:responder])
