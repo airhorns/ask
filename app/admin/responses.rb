@@ -2,10 +2,10 @@ ActiveAdmin.register Response do
 
   index do
     column :responder do |response|
-      link_to response.responder.phone_number, response.responder
+      link_to response.responder.phone_number, admin_responder_path(response.responder)
     end
     column :survey do |response|
-      link_to response.survey.name, response.survey
+      link_to response.survey.name, admin_survey_path(response.survey)
     end
     column :answers do |response|
       "#{response.answers.count} / #{response.survey.questions.count}"
@@ -16,4 +16,7 @@ ActiveAdmin.register Response do
   show do
     render 'show'
   end
+end
+
+ActiveAdmin.register Responder do
 end

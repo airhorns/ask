@@ -1,0 +1,59 @@
+<div class="panel">
+  <h3>Survey Details</h3>
+  <div class="panel_contents">
+    <div class="attributes_table survey" id="attributes_table_survey_2">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tbody><tr>
+          <th>ID</th>
+          <td><%= @survey.id %></td>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <td><%= @survey.name %></td>
+        </tr>
+        <tr>
+          <th>Phone Number</th>
+          <td><%= @survey.phone_number %></td>
+        </tr>
+        <tr>
+          <th>Active</th>
+          <td><%= @survey.active %></td>
+        </tr>
+        <tr>
+          <th>Created At</th>
+          <td><%= @survey.created_at %></td>
+        </tr>
+        <tr>
+          <th>Responses Count</th>
+          <td><%= @survey.responses_count %></td>
+        </tr>
+        <tr>
+          <th>Customer</th>
+          <td><%= link_to @survey.customer.email, admin_customer_path(@survey.customer) %></td>
+        </tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Questions</h3>
+  <div class="panel_contents">
+    <ol>
+      <% @survey.questions.each do |question| %>
+        <li><%= question.text %> (<%= link_to 'view', admin_question_path(question) %>)</li>
+      <% end %>
+    </ol>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Responses</h3>
+  <div class="panel_contents">
+    <ol>
+      <% @survey.responses.each do |response| %>
+        <li><%= response.responder.phone_number %> (<%= link_to 'view', admin_response_path(response) %>)</li>
+      <% end %>
+    </ol>
+  </div>
+</div>
