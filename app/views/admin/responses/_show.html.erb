@@ -1,0 +1,45 @@
+<div class="panel">
+  <h3>Response Details</h3>
+  <div class="panel_contents">
+    <div class="attributes_table response" id="attributes_table_response_1124">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tbody><tr>
+          <th>Id</th>
+          <td>1124</td>
+        </tr>
+        <tr>
+          <th>Responder</th>
+          <td><%= @response.responder.phone_number %></td>
+        </tr>
+        <tr>
+          <th>Survey</th>
+          <td><a href="/admin/surveys/2">A test survey</a></td>
+        </tr>
+        <tr>
+          <th>Created At</th>
+          <td>November 12, 2011 21:59</td>
+        </tr>
+        <tr>
+          <th>Updated At</th>
+          <td>November 12, 2011 21:59</td>
+        </tr>
+        <tr>
+          <th>Complete</th>
+          <td>true</td>
+        </tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Answers</h3>
+  <div class="panel_contents">
+    <dl>
+      <% @response.survey.questions.each do |question| %>
+      <dt><%= question.text %></td>
+      <dd><%= @response.answer_for_question(question).try(:text) %></td>
+      <% end %>
+    </dl>
+  </div>
+</div>

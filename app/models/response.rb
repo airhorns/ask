@@ -61,6 +61,10 @@ class Response < ActiveRecord::Base
     true
   end
 
+  def answer_for_question(question)
+    answers.where(:question_id => question).first
+  end
+
   private
 
   def check_completeness
