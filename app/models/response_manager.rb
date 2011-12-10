@@ -18,7 +18,7 @@ class ResponseManager
       if !@answer.nil?
         if @answer.save
           if finished?
-            "Thanks for helping us think outside the cup!"
+            @survey.finish_message
           else
             next_question.text
           end

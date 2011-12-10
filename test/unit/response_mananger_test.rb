@@ -31,6 +31,14 @@ class ResponseManagerTest < ActiveSupport::TestCase
     end
   end
 
+  test "should use the survey's finish_message as the finishing message" do
+    @survey = FactoryGirl.create(:survey_with_one_question, :finish_message => "Foo bar")
+
+    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    message = @manager.step("Yes")
+    assert_equal "Foo bar", message
+  end
+
   test "should error if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
     @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)

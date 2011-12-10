@@ -7,12 +7,12 @@ class Survey < ActiveRecord::Base
   scope :active, where(:active => true)
   scope :owned_by, ->(customer) { where(:customer_id => customer.id)}
 
-  validates_presence_of :name, :phone_number, :active, :customer_id
+  validates_presence_of :name, :phone_number, :active, :customer_id, :finish_message
   validates_associated :questions
 
   accepts_nested_attributes_for :questions
 
-  attr_accessible :active, :name, :customer_id
+  attr_accessible :active, :name, :customer_id, :finish_message
 
   def as_json(options = {})
     super({:include => [:questions], :methods => [:current_week_responses_count, :previous_week_responses_count]}.merge(options))

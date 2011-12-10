@@ -6,6 +6,7 @@ FactoryGirl.define do
     phone_number "+1234"
     active true
     association :customer
+    finish_message "Thats it, you're done! Thanks for your feedback."
   end
 
   factory :survey_with_one_question, :parent => :survey do |survey|
