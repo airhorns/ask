@@ -7,8 +7,8 @@ class Ask.Answer extends Ask.Model
   @belongsTo 'question'
 
   @url: (options) ->
-    response_id = options.response_id
-    delete options.response_id
+    response_id = options.data.response_id
+    delete options.data.response_id
     "/responses/#{response_id}/answers"
   url: -> "/responses/#{@get('response.id')}/answers/#{@get('id')}"
 

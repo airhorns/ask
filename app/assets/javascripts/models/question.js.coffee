@@ -6,9 +6,10 @@ class Ask.Question extends Ask.Model
   @encode 'text', 'order', 'rated?', 'answer_rate'
 
   @url: (options) ->
-    survey_id = options.survey_id
-    delete options.survey_id
+    survey_id = options.data.survey_id
+    delete options.data.survey_id
     "/surveys/#{survey_id}/questions"
+
   url: -> "/surveys/#{@get('survey.id')}/questions/#{@get('id')}"
 
   @accessor 'stats'
