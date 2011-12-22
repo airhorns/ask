@@ -14,7 +14,7 @@ class QuestionsController < ApiController
   end
 
   def stats
-    @answers = @question.answers.includes(:ratings).all
+    @answers = @question.answers.includes(:rating).all
     respond_with @question.stats
   end
 

@@ -25,6 +25,7 @@ class Answer < ActiveRecord::Base
   validates_associated :rating, :if => :rated?
   before_validation :build_rating_meta_data, :if => :rated?
   after_save :check_response_completeness
+  after_create :queue_analysis
 
   def numeric_rating
     value = rating.try(:value).to_i
@@ -72,5 +73,10 @@ class Answer < ActiveRecord::Base
 
   def check_response_completeness
     response.save
+  end
+
+  def queue_analysis
+    Resque.enqueue(RunAlertsJob, id)
+    true
   end
 end

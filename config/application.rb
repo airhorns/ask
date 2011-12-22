@@ -56,4 +56,5 @@ module Ask
   end
 
   Config = YAML.load_file("#{Rails.root}/config/constants.yml")[Rails.env]
+  TwilioClient = Twilio::REST::Client.new(Config['twilio']['sid'], Config['twilio']['token'])
 end

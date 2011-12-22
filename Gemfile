@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'batman-rails'
 gem 'twilio-ruby'
 gem 'tropo-webapi-ruby'
+gem 'resque'
 
 # ActiveAdmin
 gem 'activeadmin'
@@ -43,4 +44,5 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'minitest', '~> 2.7.0'
+  gem 'mocha', :require => false
 end
