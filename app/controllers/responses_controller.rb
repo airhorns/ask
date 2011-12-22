@@ -1,7 +1,7 @@
 class ResponsesController < ApiController
   include SurveyFinder
   before_filter :find_and_authorize_survey!, :only => [:index]
-  before_filter :find_response_and_authorize_survey, :except => [:index]
+  before_filter :find_and_authorize_response!, :except => [:index]
 
   def index
     @responses = @survey.responses
@@ -30,7 +30,7 @@ class ResponsesController < ApiController
 
   private
 
-  def find_response_and_authorize_survey
+  def find_and_authorize_response!
     @response = Response.includes(:survey).find(params[:id])
     authorize_survey(@response.survey)
   end

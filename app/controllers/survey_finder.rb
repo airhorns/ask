@@ -1,10 +1,14 @@
 module SurveyFinder
   def find_and_authorize_survey!
-    @survey = Survey.owned_by(current_customer).find(params[survey_id_params_key])
+    @survey = Survey.find(params[survey_id_params_key])
+    authorize_survey(@survey)
   end
 
   def authorize_survey(survey)
-    survey.customer == current_customer
+    unless survey.customer == current_customer
+      head :forbidden
+    end
+    false
   end
 
   private

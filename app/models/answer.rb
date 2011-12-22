@@ -1,12 +1,11 @@
 class Answer < ActiveRecord::Base
   belongs_to :question, :counter_cache => true
   belongs_to :response
+  has_one :survey, :through => :response
   has_one :rating, :class_name => 'AnswerMetaData', :conditions => {:key => 'rating'}
   has_many :meta_datas, :class_name => 'AnswerMetaData'
-  validates_presence_of :question, :response, :text
 
-  validates_associated :rating, :if => :rated?
-  before_validation :build_rating_meta_data, :if => :rated?
+  include OwnedBySurvey
 
   scope :before, ->(before) {
     scoped
@@ -22,6 +21,9 @@ class Answer < ActiveRecord::Base
 
   scope :between, ->(before, after) { scoped.before(before).after(after) }
 
+  validates_presence_of :question, :response, :text
+  validates_associated :rating, :if => :rated?
+  before_validation :build_rating_meta_data, :if => :rated?
   after_save :check_response_completeness
 
   def numeric_rating

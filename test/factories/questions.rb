@@ -14,6 +14,7 @@ FactoryGirl.define do
   sequence :question_order
 
   factory :question do
+    association :survey
     text { FactoryGirl.generate(:question)}
     order { FactoryGirl.generate(:question_order)}
   end

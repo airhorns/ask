@@ -1,7 +1,8 @@
 class QuestionsController < ApiController
-
+  include SurveyFinder
   before_filter :authenticate_customer!
   before_filter :find_and_authorize_survey!, :only => [:index, :new, :create]
+  before_filter :find_and_authorize_question!, :except => [:index, :new, :create]
 
   def index
     @questions = @survey.questions.all
@@ -9,12 +10,11 @@ class QuestionsController < ApiController
   end
 
   def show
-    @question = owned_questions.find(params[:id])
     respond_with @question
   end
 
   def stats
-    @question = owned_questions.includes(:answers => :rating).find(params[:id])
+    @answers = @question.answers.includes(:ratings).all
     respond_with @question.stats
   end
 
@@ -30,13 +30,11 @@ class QuestionsController < ApiController
   end
 
   def update
-    @question = owned_questions.find(params[:id])
     @question.update_attributes(params[:question])
     respond_with @question
   end
 
   def destroy
-    @question = owned_questions.find(params[:id])
     @question.destroy
 
     respond_to do |format|
@@ -46,11 +44,8 @@ class QuestionsController < ApiController
 
   private
 
-  def find_and_authorize_survey!
-    @survey = Survey.owned_by(current_customer).find(params[:survey_id])
-  end
-
-  def owned_questions
-    Question.with_survey_owned_by(current_customer)
+  def find_and_authorize_question!
+    @question = Question.includes(:survey).find(params[:id])
+    authorize_survey(@question.survey)
   end
 end

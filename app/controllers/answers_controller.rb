@@ -1,8 +1,10 @@
 class AnswersController < ApiController
-  before_filter :find_and_authorize_response!
+  include SurveyFinder
+  before_filter :find_and_authorize_response!, :only => [:index]
+  before_filter :find_and_authorize_answer!, :only => [:show, :destroy]
 
   def index
-    @answers = Response.find(params[:response_id]).answers
+    @answers = @response.answers
     respond_with @answers
   end
 
@@ -23,6 +25,12 @@ class AnswersController < ApiController
   private
 
   def find_and_authorize_response!
-    @response = Reponse.with_survey_owned_by(current_customer).find(params[:response_id])
+    @response = Response.includes(:survey, :answers).find(params[:response_id])
+    authorize_survey(@response.survey)
+  end
+
+  def find_and_authorize_answer!
+    @answer = Answer.includes(:survey).find(params[:id])
+    authorize_survey(@answer.survey)
   end
 end

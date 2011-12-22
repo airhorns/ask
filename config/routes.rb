@@ -1,5 +1,8 @@
+require 'resque/server'
+
 Ask::Application.routes.draw do
 
+  mount Resque::Server.new, :at => "/admin/resque"
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -17,7 +20,7 @@ Ask::Application.routes.draw do
 
   constraints :format => :json do
     resources :surveys, :except => [:edit] do
-      resources :questions, :only => [:index, :new]
+      resources :questions, :only => [:index, :new, :create]
       resources :responses, :only => [:index]
       get :start, :on => :member
     end
