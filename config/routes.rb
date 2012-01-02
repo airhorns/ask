@@ -1,5 +1,3 @@
-require 'resque/server'
-
 Ask::Application.routes.draw do
 
   mount Resque::Server.new, :at => "/admin/resque"
