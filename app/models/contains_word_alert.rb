@@ -7,15 +7,16 @@ class ContainsWordAlert < Alert
   end
 
   def check!(answer)
+    puts answer.text
     run!(answer) if answer.text.include?(keyword)
   end
 
   def keyword
-    options['keyword']
+    options[:keyword]
   end
 
   def run!(answer)
-    options['recipients'].each do |recipient|
+    options[:recipients].each do |recipient|
       self.client.account.sms.messages.create({
         :to => recipient,
         :from => answer.survey.phone_number,

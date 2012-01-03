@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ContainsWordAlertTest < ActiveSupport::TestCase
   def setup
-    @alert = ContainsWordAlert.new(:options => {'keyword' => 'mockingjay', 'recipients' => ['1112223333', '1112223334']})
+    @alert = FactoryGirl.build(:contains_word_alert, :options => {:keyword => 'mockingjay', :recipients => ['1112223333', '1112223334']})
   end
 
   def test_smses_are_sent_when_the_answer_includes_the_keyword

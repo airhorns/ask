@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :contains_word_alert do
-    association :survey
+    options ({:keyword => 'terrible'})
   end
 end
