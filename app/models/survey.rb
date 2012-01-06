@@ -2,7 +2,7 @@ class Survey < ActiveRecord::Base
   has_many :questions
   has_many :responses
   has_many :responders, :through => :responses
-  has_many :alerts
+  has_many :alerts, :as => :subject
   belongs_to :customer
 
   scope :active, where(:active => true)

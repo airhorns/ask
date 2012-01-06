@@ -1,6 +1,5 @@
 class QuestionsController < ApiController
   include SurveyFinder
-  before_filter :authenticate_customer!
   before_filter :find_and_authorize_survey!, :only => [:index, :new, :create]
   before_filter :find_and_authorize_question!, :except => [:index, :new, :create]
 
@@ -36,10 +35,7 @@ class QuestionsController < ApiController
 
   def destroy
     @question.destroy
-
-    respond_to do |format|
-      format.json { head :ok }
-    end
+    respond_with @question
   end
 
   private

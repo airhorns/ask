@@ -19,6 +19,7 @@ Ask::Application.routes.draw do
   constraints :format => :json do
     resources :surveys, :except => [:edit] do
       resources :questions, :only => [:index, :new, :create]
+      resources :alerts, :only => [:index, :new, :create]
       resources :responses, :only => [:index]
       get :start, :on => :member
     end
@@ -29,12 +30,15 @@ Ask::Application.routes.draw do
 
     resources :questions, :only => [:show, :update, :destroy] do
       get :stats, :on => :member
+      resources :alerts, :only => [:new, :create]
     end
 
     resources :responses, :only => [:show, :destroy] do
       resources :answers, :only => [:index]
     end
+
     resources :answers, :only => [:show, :destroy]
+    resources :alerts, :only => [:show, :update, :destroy]
   end
 
   #match '*segments' => "dashboard#app"
