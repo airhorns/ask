@@ -1,12 +1,19 @@
 class Ask.Alert extends Ask.Model
   @storageKey: 'alerts'
   @persist Batman.RailsStorage
+  @encode 'options', 'subject_type'
+  @belongsTo 'survey',
+    localKey: 'subject_id'
 
   @url: (options) ->
-    survey_id = options.data.survey_id
-    delete options.data.survey_id
-    "/surveys/#{survey_id}/alerts"
+    surveyId = options.data.subject_id
+    delete options.data.subject_id
+    "/surveys/#{surveyId}/alerts"
 
-  url: -> "/alerts/#{get('id')}"
+  url: ->
+    if @isNew()
+      "/surveys/#{@get('surveyId')}/alerts"
+    else
+      "/alerts/#{@get('id')}"
 
   @accessor 'subject', -> Ask[@get('subject_type')].find(@get('subject_id'))

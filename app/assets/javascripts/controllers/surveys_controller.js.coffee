@@ -12,7 +12,6 @@ class Ask.SurveysController extends Batman.Controller
       params
 
   index: (params) ->
-    console.log "at surveys"
     @set 'surveys', Ask.Survey.get('all')
 
   show: (params) ->
@@ -54,3 +53,10 @@ class Ask.SurveysController extends Batman.Controller
       survey: @get('survey')
       totalCount: @get('survey.responses_count')
       page: 1
+
+  @accessor 'alertsRouteOptions', ->
+    {
+      controller: 'alerts'
+      action: 'index'
+      surveyId: @get('survey.id')
+    }

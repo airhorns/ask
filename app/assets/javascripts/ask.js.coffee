@@ -2,16 +2,13 @@ window.Ask = class Ask extends Batman.App
 
   Batman.View::prefix = 'assets/views'
 
-  @resources 'survey'
-  @resources 'response'
-  @route 'surveys/:id/analyze', "surveys#analyze", {resource: 'surveys', action: 'analyze'}
+  @resources 'surveys', ->
+    @member 'analyze'
+    @resources 'alerts'
+
+  @resources 'responses'
+
   @root 'surveys#index'
-
-  @on 'run', ->
-    console?.log "Running ...."
-
-  @on 'ready', ->
-    console?.log "Ask ready for use."
 
   @flash: Batman()
   @flash.accessor

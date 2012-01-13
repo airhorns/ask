@@ -1,0 +1,18 @@
+<fieldset>
+  <div class="clearfix">
+    <label for="keyword">Phrase</label>
+    <div class="input">
+      <input class="xlarge" name="keyword" data-bind="alert.keyword" type="text">
+      <span class="help-block">This phrase will be searched for in all incoming responses case insensitively.</span>
+    </div>
+  </div>
+  <div class="clearfix">
+    <label for="keyword">Recipients</label>
+    <div class="input">
+      <input class="xlarge" name="recipients" data-bind="alert.recipients" type="text">
+    </div>
+  </div>
+</fieldset>
+<div class="actions">
+  <input type="submit" class="btn primary" data-bind="formSubmitText">&nbsp;<button type="reset" class="btn">Cancel</button>
+</div>
