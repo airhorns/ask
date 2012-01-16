@@ -1,12 +1,14 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :survey do
+  factory :survey do |survey|
     name "A test survey"
-    phone_number "+1234"
     active true
     association :customer
     finish_message "Thats it, you're done! Thanks for your feedback."
+    survey.after_build do |survey|
+      survey.segments << FactoryGirl.build(:survey_segment, :survey => survey)
+    end
   end
 
   factory :survey_with_one_question, :parent => :survey do |survey|

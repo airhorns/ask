@@ -5,14 +5,11 @@ class ResponsesController < ApiController
 
   def index
     @responses = @survey.responses
+    .including_survey
+    .including_answers
     .order('id DESC')
     .offset(params[:offset] || 0)
     .limit(params[:limit] || 25)
-    .includes([
-      {:survey => :questions},
-      :responder,
-      {:answers => [:question, :rating]}
-    ])
 
     respond_with @responses
   end
@@ -31,7 +28,7 @@ class ResponsesController < ApiController
   private
 
   def find_and_authorize_response!
-    @response = Response.includes(:survey).find(params[:id])
+    @response = Response.includes({:segment => :survey}).find(params[:id])
     authorize_survey(@response.survey)
   end
 end

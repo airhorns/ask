@@ -19,7 +19,7 @@ class ContainsWordAlert < Alert
     options[:recipients].each do |recipient|
       self.client.account.sms.messages.create({
         :to => recipient,
-        :from => answer.survey.phone_number,
+        :from => answer.response.segment.phone_number,
         :body => "Keyword \"#{keyword}\" found in response \"#{answer.text}\"!"
       })
     end

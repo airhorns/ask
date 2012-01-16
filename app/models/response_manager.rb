@@ -4,9 +4,10 @@ class ResponseManager
   def initialize(from, to)
     @error = false
     @responder = Responder.find_or_create_by_phone_number(from)
-    @survey = Survey.active.find_by_phone_number(to)
-    if @survey.present?
-      @response = Response.for_survey_and_responder(survey, responder)
+    @segment = SurveySegment.for_phone_number(to)
+    if @segment.present?
+      @survey = @segment.survey
+      @response = Response.for_segment_and_responder(@segment, @responder)
     else
       @error = true
     end

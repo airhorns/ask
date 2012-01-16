@@ -17,7 +17,7 @@ FactoryGirl.define do
   factory :answer do
     association :response
     text { FactoryGirl.generate(:answer_text) }
-    question { response.survey.questions.first }
+    question { response.segment.survey.questions.first }
   end
 
   factory :rated_answer, :parent => :answer do |answer|

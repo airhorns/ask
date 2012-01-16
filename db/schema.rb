@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102231409) do
+ActiveRecord::Schema.define(:version => 20120114172505) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -115,23 +115,29 @@ ActiveRecord::Schema.define(:version => 20120102231409) do
 
   create_table "responses", :force => true do |t|
     t.integer  "responder_id"
-    t.integer  "survey_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "complete"
+    t.integer  "survey_segment_id"
   end
 
+  add_index "responses", ["responder_id"], :name => "index_responses_on_survey_id_and_responder_id"
   add_index "responses", ["responder_id"], :name => "responder_id_ix"
-  add_index "responses", ["survey_id", "responder_id"], :name => "index_responses_on_survey_id_and_responder_id"
-  add_index "responses", ["survey_id"], :name => "survey_id_ix"
 
-  create_table "surveys", :force => true do |t|
-    t.string   "name"
+  create_table "survey_segments", :force => true do |t|
     t.string   "phone_number"
-    t.boolean  "active"
+    t.integer  "survey_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "responses_count"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.string   "name"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "customer_id"
     t.string   "finish_message"
   end

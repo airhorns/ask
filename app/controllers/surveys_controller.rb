@@ -19,7 +19,6 @@ class SurveysController < ApiController
   def create
     @survey = Survey.new(params[:survey])
     @survey.customer = current_customer
-    @survey.phone_number = "11111"
     @survey.save
     respond_with @survey
   end

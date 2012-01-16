@@ -1,10 +1,12 @@
 class Response < ActiveRecord::Base
-  belongs_to :survey, :counter_cache => true
   belongs_to :responder
-  has_many :questions, :through => :survey
   has_many :answers, :dependent => :destroy
 
-  validates_presence_of :survey, :responder
+  belongs_to :segment, :counter_cache => true, :class_name => 'SurveySegment', :foreign_key => :survey_segment_id
+  has_one :survey, :through => :segment
+  has_many :questions, :through => :survey
+
+  validates_presence_of :segment, :responder
   validates :complete, :inclusion => { :in => [true, false] }
 
   before_validation :set_completeness
@@ -12,11 +14,14 @@ class Response < ActiveRecord::Base
   scope :complete, where(:complete => true)
   scope :incomplete, where(:complete => false)
   scope :recent, ->(limit) { includes(:survey => :customer).order(:created_at).limit(limit) }
+  scope :including_survey, includes({:segment => {:survey => :questions}})
+  scope :including_answers, includes([:responder, {:answers => :rating}])
+
 
   include OwnedBySurvey
 
-  def self.for_survey_and_responder(survey, responder)
-    attrs = {:survey_id => survey.id, :responder_id => responder.id}
+  def self.for_segment_and_responder(segment, responder)
+    attrs = {:survey_segment_id => segment.id, :responder_id => responder.id}
     existing = self.incomplete.where(attrs).first
     if !existing.nil?
       existing

@@ -11,7 +11,7 @@ namespace :demo do
       1.upto(30) do |i|
         Timecop.travel(Time.now - i.days) do
           (rand(20) + 10).times do
-            response = FactoryGirl.create(:response, :survey => survey)
+            response = FactoryGirl.create(:response, :segment => survey.segments.first)
             if rand(2) == 1
               message = response.step("#{rand(5) + 1}") # Answer the rating
             else
@@ -21,6 +21,7 @@ namespace :demo do
             until response.complete?
               response.step(FactoryGirl.generate(:answer_text)).save!
             end
+            print '.'
           end
         end
       end
