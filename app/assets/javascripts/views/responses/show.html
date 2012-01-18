@@ -11,7 +11,7 @@
   </div>
 
   <h2>Answers</h2>
-  <div data-foreach-question="response.survey.questions" data-context-answer="response.answers.indexedByUnique.question_id | get question.id" class="answer">
+  <div data-foreach-question="response.segment.survey.questions.sortedBy.order" data-context-answer="response.answers.indexedByUnique.question_id | get question.id" class="answer">
     <p><span data-bind="question.text"></span> <small>(<a data-route="question">see question</a>)</small></p>
     <h4 data-bind="answer.text"></h4>
   </div>

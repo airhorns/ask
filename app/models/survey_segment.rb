@@ -6,7 +6,7 @@ class SurveySegment < ActiveRecord::Base
   def self.for_phone_number(phone_number)
     includes(:survey)
       .where(:surveys => {:active => true})
-      .first
+      .find_by_phone_number(phone_number)
   end
 
   def stats

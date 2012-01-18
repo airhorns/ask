@@ -29,11 +29,15 @@ class SurveyStats < StatsCalculator
   end
 
   def current_week_average_rating
-    weekly_average_rating[weekly_average_rating.size - 1][:y]
+    if weekly_average_rating.size > 0
+      weekly_average_rating[weekly_average_rating.size - 1][:y]
+    end
   end
 
   def previous_week_average_rating
-    weekly_average_rating[weekly_average_rating.size - 2][:y]
+    if weekly_average_rating.size > 0
+      weekly_average_rating[weekly_average_rating.size - 2][:y]
+    end
   end
 
   def weekly_average_rating

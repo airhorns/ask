@@ -10,7 +10,7 @@ class ResponseManagerTest < ActiveSupport::TestCase
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+        @manager = ResponseManager.new(@responder.phone_number, @survey.first_phone_number)
         @manager.step("Yes")
         assert !@manager.error?
       end
@@ -22,7 +22,7 @@ class ResponseManagerTest < ActiveSupport::TestCase
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+        @manager = ResponseManager.new(@responder.phone_number, @survey.first_phone_number)
         assert !@manager.finished?
         @manager.step("Yes")
         assert !@manager.error?
@@ -34,14 +34,14 @@ class ResponseManagerTest < ActiveSupport::TestCase
   test "should use the survey's finish_message as the finishing message" do
     @survey = FactoryGirl.create(:survey_with_one_question, :finish_message => "Foo bar")
 
-    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager = ResponseManager.new(@responder.phone_number, @survey.first_phone_number)
     message = @manager.step("Yes")
     assert_equal "Foo bar", message
   end
 
   test "should error if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
-    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager = ResponseManager.new(@responder.phone_number, @survey.first_phone_number)
     @manager.step("Yes")
     @manager.step("Yes")
     assert @manager.error?
@@ -54,11 +54,11 @@ class ResponseManagerTest < ActiveSupport::TestCase
 
   test "should error if the user gives an invalid rating for a rated question" do
     @survey = FactoryGirl.create(:survey_with_one_rating_question)
-    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager = ResponseManager.new(@responder.phone_number, @survey.first_phone_number)
     @manager.step("10")
     assert @manager.error?
 
-    @manager = ResponseManager.new(@responder.phone_number, @survey.phone_number)
+    @manager = ResponseManager.new(@responder.phone_number, @survey.first_phone_number)
     @manager.step("-4")
     assert @manager.error?
   end

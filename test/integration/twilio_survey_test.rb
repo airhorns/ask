@@ -9,7 +9,7 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        post "/api/twilio/receive/#{@survey.first_phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
       end
     end
 
@@ -21,7 +21,7 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
 
     assert_difference('Response.count') do
       assert_difference('Answer.count') do
-        post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+        post "/api/twilio/receive/#{@survey.first_phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
       end
     end
     assert_response :success
@@ -30,9 +30,9 @@ class TwilioSurveyTest < ActionDispatch::IntegrationTest
   test "should behave if the user tries to answer more than the available questions" do
     @survey = FactoryGirl.create(:survey_with_one_question)
 
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
+    post "/api/twilio/receive/#{@survey.first_phone_number}.xml", {:From => @responder.phone_number, :Body => "Yes"}
     assert_response :success
-    post "/api/twilio/receive/#{@survey.phone_number}.xml", {:From => @responder.phone_number, :Body => "No"}
+    post "/api/twilio/receive/#{@survey.first_phone_number}.xml", {:From => @responder.phone_number, :Body => "No"}
     assert_response :success
   end
 

@@ -13,9 +13,13 @@ class Survey < ActiveRecord::Base
   validates_presence_of :name, :active, :customer_id, :finish_message
   validates_associated :questions
 
-  accepts_nested_attributes_for :questions
+  accepts_nested_attributes_for :questions, :segments
 
   attr_accessible :active, :name, :customer_id, :finish_message
+
+  def first_phone_number
+    segments.first.phone_number
+  end
 
   def as_json(options = {})
     super({:include => {

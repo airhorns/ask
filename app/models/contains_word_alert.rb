@@ -7,7 +7,6 @@ class ContainsWordAlert < Alert
   end
 
   def check!(answer)
-    puts answer.text
     run!(answer) if answer.text.include?(keyword)
   end
 

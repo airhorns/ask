@@ -10,12 +10,12 @@ class ContainsWordAlertTest < ActiveSupport::TestCase
 
     Ask::TwilioClient.account.sms.messages.expects(:create).with({
       :to => "1112223333",
-      :from => @answer.survey.phone_number,
+      :from => @answer.response.segment.phone_number,
       :body => 'Keyword "mockingjay" found in response "I am the mockingjay."!'
     }).returns(true)
     Ask::TwilioClient.account.sms.messages.expects(:create).with({
       :to => "1112223334",
-      :from => @answer.survey.phone_number,
+      :from => @answer.response.segment.phone_number,
       :body => 'Keyword "mockingjay" found in response "I am the mockingjay."!'
     }).returns(true)
 

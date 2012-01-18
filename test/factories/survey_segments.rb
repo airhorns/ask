@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :survey_segment do
-    phone_number "+1234"
+    phone_number { FactoryGirl.generate(:phone_number) }
     name "A segment"
     association :survey, :factory => :survey_with_many_questions
   end

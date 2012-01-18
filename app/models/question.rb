@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   has_many :answers, :dependent => :destroy
   has_many :responders, :through => :answers
   has_many :alerts, :as => :subject
-  validates_presence_of :text, :order
+  validates_presence_of :text, :order, :survey
 
   attr_accessible :text, :order
 

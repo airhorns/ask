@@ -23,6 +23,10 @@ class Ask.ResponsesController extends Batman.Controller
   show: (params) ->
     Ask.Response.find params.id, (err, record) =>
       @set 'response', record
+      record.get('segment').load (err, segment) =>
+        throw err if err
+        segment.get('survey').load (err, survey) =>
+          throw err if err
 
   _generatePages: ->
     total = @get('paginatedResponses.pageCount') + 1

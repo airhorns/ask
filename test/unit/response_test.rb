@@ -25,6 +25,18 @@ class ResponseTest < ActiveSupport::TestCase
     @response = Response.for_segment_and_responder(@segment, @responder)
     assert @response.persisted?
     assert !@response.complete?
+    assert_equal @response.segment, @segment
+  end
+
+  test "for_segment_and_responder generates a new response for a different segment of the same survey" do
+    @segment_two = FactoryGirl.create(:survey_segment, :survey => @survey)
+    @segment_three = FactoryGirl.create(:survey_segment, :survey => @survey)
+    initial_response = Response.for_segment_and_responder(@segment, @responder)
+    assert_equal initial_response.segment, @segment
+    second_response = Response.for_segment_and_responder(@segment_two, @responder)
+    assert_equal second_response.segment, @segment_two
+    third_response = Response.for_segment_and_responder(@segment_three, @responder)
+    assert_equal third_response.segment, @segment_three
   end
 
   test "for_segment_and_responder finds an existing incomplete response" do

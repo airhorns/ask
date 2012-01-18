@@ -1,5 +1,5 @@
 class ResponseManager
-  attr_reader :survey, :responder, :response, :message
+  attr_reader :survey, :responder, :response, :message, :segment
 
   def initialize(from, to)
     @error = false
