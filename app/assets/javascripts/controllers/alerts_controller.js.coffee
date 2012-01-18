@@ -1,3 +1,5 @@
+#= require views/tokenized_field_view
+
 class Ask.AlertsController extends Batman.Controller
 
   index: (params) ->
@@ -15,17 +17,18 @@ class Ask.AlertsController extends Batman.Controller
 
   new: (params) ->
     @set 'survey', Ask.Survey.find(params.surveyId, (err) -> throw err if err)
-    @set 'alert', new Ask.Alert(surveyId: params.surveyId)
+    @set 'alert', new Ask.Alert
+      surveyId: params.surveyId
+      subject_id: params.surveyId
+      subject_type: 'Survey'
+      type: 'ContainsWordAlert'
 
   create: ->
     @get('alert').save (err) =>
       if err
         return if err instanceof Batman.ErrorsHash
         throw err
-      Batman.redirect
-        controller: "alerts"
-        action: 'show'
-        surveyId: @get('survey.id')
+      Batman.redirect Ask.get('routes.surveys').get(@get('survey')).get('alerts')
 
   destroy: (alert) ->
     alert.destroy (err) ->

@@ -6,6 +6,7 @@
 
 #= require jquery
 #= require jquery_ujs
+#= require jquery-ui.min
 #= require twitter/bootstrap
 #= require rickshaw/rickshaw.min
 
@@ -25,8 +26,6 @@
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./helpers
-
-#= require_tree .
 
 #Batman.mixin Batman.config,
   #usePushState: yes

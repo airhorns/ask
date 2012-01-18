@@ -2,6 +2,7 @@ class Ask.Alert extends Ask.Model
   @storageKey: 'alerts'
   @persist Batman.RailsStorage
   @encode 'options', 'subject_type'
+
   @belongsTo 'survey',
     localKey: 'subject_id'
 
@@ -17,3 +18,6 @@ class Ask.Alert extends Ask.Model
       "/alerts/#{@get('id')}"
 
   @accessor 'subject', -> Ask[@get('subject_type')].find(@get('subject_id'))
+  @accessor 'options'
+    get: -> Batman.Model.defaultAccessor.get.call(@, 'options') || {}
+    set: Batman.Model.defaultAccessor.set

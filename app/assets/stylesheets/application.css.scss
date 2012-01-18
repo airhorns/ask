@@ -5,10 +5,46 @@
  *= require_self
  *= require twitter/bootstrap
  *= require rickshaw/rickshaw.min
+ *= require tagit/jquery.tagit
+ *= require tagit/tagit.ui-zendesk
  *= require dashboard
  *= require responses
  *= require surveys
+ *= require alerts
 */
 body {
   padding-top: 60px !important; /* 40px to make the container go all the way to the bottom of the topbar */
+}
+
+body {
+  ul.tagit {
+    margin-left: 0px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    height: 28px;
+    padding: 4px;
+    font-size: 13px;
+    line-height: 18px;
+    color: gray;
+    border: 1px solid #CCC;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    input[type="text"] {
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+  }
 }

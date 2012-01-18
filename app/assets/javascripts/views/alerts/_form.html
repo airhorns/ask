@@ -2,14 +2,14 @@
   <div class="clearfix">
     <label for="keyword">Phrase</label>
     <div class="input">
-      <input class="xlarge" name="keyword" data-bind="alert.keyword" type="text">
+      <input class="xlarge" name="keyword" data-bind="alert.options.keyword" type="text">
       <span class="help-block">This phrase will be searched for in all incoming responses case insensitively.</span>
     </div>
   </div>
   <div class="clearfix">
     <label for="keyword">Recipients</label>
     <div class="input">
-      <input class="xlarge" name="recipients" data-bind="alert.recipients" type="text">
+      <input class="xlarge" name="recipients" data-view="TokenizedFieldView" data-bind="alert.options.recipients" type="text">
     </div>
   </div>
 </fieldset>
