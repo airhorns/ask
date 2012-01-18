@@ -16,10 +16,6 @@ class Survey < ActiveRecord::Base
 
   attr_accessible :active, :name, :customer_id, :finish_message
 
-  def phone_number
-    segments.first.phone_number
-  end
-
   def as_json(options = {})
     super({:include => [:questions, :segments], :methods => [:current_week_responses_count, :previous_week_responses_count]}.merge(options))
   end
