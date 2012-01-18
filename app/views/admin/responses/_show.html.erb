@@ -13,19 +13,23 @@
         </tr>
         <tr>
           <th>Survey</th>
-          <td><a href="/admin/surveys/2">A test survey</a></td>
+          <td><%= link_to @response.segment.survey.name, admin_survey_path(@response.segment.survey) %></td>
+        </tr>
+        <tr>
+          <th>Segment</th>
+          <td><%= @response.segment.name %></td>
         </tr>
         <tr>
           <th>Created At</th>
-          <td>November 12, 2011 21:59</td>
+          <td><%= @response.created_at.to_s %></td>
         </tr>
         <tr>
           <th>Updated At</th>
-          <td>November 12, 2011 21:59</td>
+          <td><%= @response.updated_at.to_s %></td>
         </tr>
         <tr>
           <th>Complete</th>
-          <td>true</td>
+          <td><%= @response.complete %></td>
         </tr>
       </tbody></table>
     </div>

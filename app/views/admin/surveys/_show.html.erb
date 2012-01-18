@@ -16,8 +16,8 @@
           <td>"<%= @survey.finish_message %>"</td>
         </tr>
         <tr>
-          <th>Phone Number</th>
-          <td><%= @survey.phone_number %></td>
+          <th>Phone Numbers</th>
+          <td><%= @survey.segments.map(&:phone_number).join ', ' %></td>
         </tr>
         <tr>
           <th>Active</th>
@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <th>Responses Count</th>
-          <td><%= @survey.responses_count %></td>
+          <td><%= @survey.stats.total_responses %></td>
         </tr>
         <tr>
           <th>Customer</th>
@@ -37,6 +37,17 @@
         </tr>
       </tbody></table>
     </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Segments</h3>
+  <div class="panel_contents">
+    <ol>
+      <% @survey.segments.each do |segment| %>
+        <li><%= segment.name %></li>
+      <% end %>
+    </ol>
   </div>
 </div>
 
