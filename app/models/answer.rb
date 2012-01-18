@@ -37,7 +37,7 @@ class Answer < ActiveRecord::Base
   end
 
   def serializable_hash(options = {})
-    if question.rated?
+    if rated?
       super({:methods => [:numeric_rating, :rated?]}.merge(options))
     else
       super

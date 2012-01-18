@@ -5,19 +5,19 @@
   </div>
   <div class="row survey_slug">
     <div class="span4">
-      <h3 data-bind="survey.totalResponses"></h3>
+      <h3 data-bind="survey.stats.total_responses"></h3>
       <h4>total responses</h4>
       <a data-route="survey">see all</a>
     </div>
     <div class="span4">
-      <h3 data-bind="survey.current_week_responses_count"></h3>
+      <h3 data-bind="survey.stats.current_week_responses_count"></h3>
       <h4>responses this week</h4>
-      <p><span data-bind="survey.previous_week_responses_count"></span> responses last week</p>
+      <p><span data-bind="survey.stats.previous_week_responses_count"></span> responses last week</p>
     </div>
     <div class="span4">
-      <h3 data-bind="survey.firstRatedQuestion.stats.current_week_average | round 2 | default 0 | append ' / 5'"></h3>
+      <h3 data-bind="survey.stats.current_week_average_rating | round 2 | default 0 | append ' / 5'"></h3>
       <h4>average rating this week</h4>
-      <p><span data-bind="survey.firstRatedQuestion.stats.previous_week_average | round 2"></span> average last week</p>
+      <p><span data-bind="survey.stats.previous_week_average_rating | round 2"></span> average last week</p>
     </div>
     <div class="span4">
     </div>

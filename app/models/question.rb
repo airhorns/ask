@@ -13,12 +13,9 @@ class Question < ActiveRecord::Base
     false
   end
 
-  def as_json(options = {})
-    super({:methods => [:rated?, :answer_rate]}.merge(options))
-  end
-
   def stats
-    QuestionStats.new(self)
+    @stats ||= QuestionStats.new(self)
+    @stats
   end
 
   def answer_rate

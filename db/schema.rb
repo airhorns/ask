@@ -121,7 +121,6 @@ ActiveRecord::Schema.define(:version => 20120114172505) do
     t.integer  "survey_segment_id"
   end
 
-  add_index "responses", ["responder_id"], :name => "index_responses_on_survey_id_and_responder_id"
   add_index "responses", ["responder_id"], :name => "responder_id_ix"
 
   create_table "survey_segments", :force => true do |t|

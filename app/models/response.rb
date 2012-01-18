@@ -15,7 +15,7 @@ class Response < ActiveRecord::Base
   scope :incomplete, where(:complete => false)
   scope :recent, ->(limit) { includes(:survey => :customer).order(:created_at).limit(limit) }
   scope :including_survey, includes({:segment => {:survey => :questions}})
-  scope :including_answers, includes([:responder, {:answers => :rating}])
+  scope :including_answers, includes([:responder, {:answers => [:question, :rating]}])
 
 
   include OwnedBySurvey

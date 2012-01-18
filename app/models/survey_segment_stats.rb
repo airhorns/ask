@@ -1,4 +1,4 @@
-class SurveySegmentStats
+class SurveySegmentStats < StatsCalculator
   AVERAGE_DAILY_RATING_QUERY = <<-eos
     SELECT
         EXTRACT(EPOCH FROM date_trunc('day', "answers".created_at)) as x,
@@ -45,24 +45,5 @@ class SurveySegmentStats
       'today_response_count' => daily_response_counts[daily_response_counts.size - 1][:y],
       'yesterday_response_count' => daily_response_counts[daily_response_counts.size - 2][:y]
     }
-  end
-
-  private
-
-  def interpolate(query, *values)
-    until values.size === 0
-      query.sub!(/\?/, values.pop.to_s)
-    end
-    query
-  end
-
-  def execute(query, *values)
-    @segment.connection.execute(interpolate(query, *values)).to_a
-  end
-
-  def cast_to_numeric_on_date(data)
-    data.map do |point|
-      {x: point['x'].to_i, y: point['y'].to_f}
-    end
   end
 end

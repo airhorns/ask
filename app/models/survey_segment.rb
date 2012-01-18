@@ -11,5 +11,6 @@ class SurveySegment < ActiveRecord::Base
 
   def stats
     @stats ||= SurveySegmentStats.new(self)
+    @stats
   end
 end

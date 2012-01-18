@@ -2,7 +2,7 @@ class Ask.Response extends Ask.Model
   @storageKey: 'responses'
   @persist Batman.RailsStorage
 
-  @belongsTo 'segment', {name: 'SurveySegment'}
+  @belongsTo 'segment', {name: 'SurveySegment', localKey: 'survey_segment_id'}
   @belongsTo 'responder'
   @hasMany 'answers', {autoload: false}
 

@@ -3,5 +3,5 @@
   <li><a data-route="routes.surveys[survey].questions">Questions</a></li>
   <li><a data-route="routes.surveys[survey].alerts">Alerts</a></li>
   <li><a data-route="routes.surveys[survey].analyze">Analysis</a></li>
-  <li data-foreach-segment="survey.segments"><a data-route="routes.surveys[survey].surveySegments[segment]" data-bind="segment.name | append ' ( ' | append segment.phone_number | append ') ' "></a></li>
+  <li data-foreach-segment="survey.segments"><a data-route="routes.surveys[survey].surveySegments[segment]" data-bind="segment.name | append ' (' | append segment.phone_number | append ') ' "></a></li>
 </ul>

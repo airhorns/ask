@@ -12,9 +12,42 @@
     </div>
   </div>
   <div class="span-one-third">
-    <h3>Total respones received</h3>
-    <h1 data-bind="survey.totalResponses"></h1>
+    <h3>Total responses received</h3>
+    <h1 data-bind="survey.stats.total_responses"></h1>
   </div>
   <div class="span-one-third">
+    <h3>Average rating this week</h3>
+    <h1 data-bind="survey.stats.current_week_average_rating | round 2"></h1>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="span-16">
+    <h2>Most recent responses</h2>
+    <table class="responses">
+      <tr>
+        <th>Segment</th>
+        <th>Responder</th>
+        <th data-foreach-question="survey.questions.sortedBy.order" data-bind="question.text | truncate 30"></th>
+        <th>Actions</th>
+      </tr>
+      <tr data-foreach-response="recentResponses">
+        <td><a data-route="routes.surveys[survey].surveySegments[response.segment]" data-bind="response.segment.name"></a></td>
+        <td><a data-route="response.responder" data-bind="response.responder.phone_number"></a></td>
+        <td data-foreach-question="survey.questions.sortedBy.order" data-context-answer="response.answers.indexedByUnique.question_id | get question.id">
+          <span data-bind="answer.text"></span>
+          <span data-showif="answer.rated?" data-bind="answer.numeric_rating | append ')' | prepend '('"></span>
+        </td>
+        <td class="actions_column">
+          <a class="btn small primary" data-route="response">More Info</a>
+          <a class="btn danger small" data-event-click="response.destroy" data-confirm="Are you sure you want to destroy this response? You can't undo this!">Destroy</a>
+        </td>
+      </tr>
+    </table>
+    <h3>See all responses for</h3>
+    <span data-foreach-segment="survey.segments">
+      <a class="btn" data-bind="segment.name" data-route="routes.responses"></a>
+      &nbsp;
+    </span>
   </div>
 </div>
