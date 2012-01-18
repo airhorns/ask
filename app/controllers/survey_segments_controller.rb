@@ -13,6 +13,10 @@ class SurveySegmentsController < ApiController
     respond_with(@survey_segment)
   end
 
+  def stats
+    respond_with(@survey_segment.stats)
+  end
+
   def new
     @survey_segment = @survey.segments.build
     respond_with(@survey_segment)

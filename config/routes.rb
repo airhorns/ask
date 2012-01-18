@@ -38,7 +38,10 @@ Ask::Application.routes.draw do
       resources :answers, :only => [:index]
     end
 
-    resources :survey_segments, :except => [:index, :new, :create]
+    resources :survey_segments, :except => [:index, :new, :create] do
+      get :stats, :on => :member
+    end
+
     resources :answers, :only => [:show, :destroy]
     resources :alerts, :only => [:show, :update, :destroy]
   end

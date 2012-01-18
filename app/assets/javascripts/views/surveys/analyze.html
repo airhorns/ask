@@ -1,6 +1,23 @@
-<h1>Results for <span data-bind="survey.name"></span></h1>
+<div class="page-header">
+  <div data-partial="surveys/_navigation"></div>
+  <h1>Results for <span data-bind="survey.name"></span></h1>
+</div>
 
-<h3>Rating average for the past month</h3>
-<div data-view="RatingOverTimeView"></div>
+<div class="row">
+  <div class="span11">
+    <h3>Rating average for the past month</h3>
+    <div data-view="RatingOverTimeView"></div>
+  </div>
+  <div class="span5">
+    <h3>Rating Today</h3>
+    <h1>3.1</h1>
+    <h6>3.0 yesterday</h6>
+    <hr/>
+    <h3>Responses Today</h3>
+    <h1>6</h1>
+    <h6>5 yesterday</h6>
+  </div>
+</div>
+
 <h3>Rating distributions for the past week</h3>
 <div data-view="RatingDistributionView"></div>

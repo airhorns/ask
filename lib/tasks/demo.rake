@@ -8,20 +8,24 @@ namespace :demo do
     customer = Customer.create!(email: "harry.brundage@gmail.com", password: "password", password_confirmation: 'password')
     2.times do
       survey = FactoryGirl.create(:survey_with_one_rating_question, customer: customer)
-      1.upto(30) do |i|
-        Timecop.travel(Time.now - i.days) do
-          (rand(20) + 10).times do
-            response = FactoryGirl.create(:response, :segment => survey.segments.first)
-            if rand(2) == 1
-              message = response.step("#{rand(5) + 1}") # Answer the rating
-            else
-              message = response.step("#{"*" * (rand(5) + 1)}") # Answer the rating
+      survey.segments.create!(:phone_number => "+1235", :name => "Location B")
+      survey.segments.create!(:phone_number => "+1236", :name => "Location C")
+      survey.segments.each do |segment|
+        1.upto(30) do |i|
+          Timecop.travel(Time.now - i.days) do
+            (rand(15) + 5).times do
+              response = FactoryGirl.create(:response, :segment => segment)
+              if rand(2) == 1
+                message = response.step("#{rand(5) + 1}") # Answer the rating
+              else
+                message = response.step("#{"*" * (rand(5) + 1)}") # Answer the rating
+              end
+              message.save!
+              until response.complete?
+                response.step(FactoryGirl.generate(:answer_text)).save!
+              end
+              print '.'
             end
-            message.save!
-            until response.complete?
-              response.step(FactoryGirl.generate(:answer_text)).save!
-            end
-            print '.'
           end
         end
       end

@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div data-partial="surveys/_navigation"></div>
+  <h2>Questions for <span data-bind="survey.title"></span></h2>
+</div>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Answer Rate</th>
+  </tr>
+  <tr data-foreach-question="survey.questions">
+    <td data-bind="question.text"></td>
+    <td data-bind="question.answerRateAsPercentage | append ' %'"></td>
+  </tr>
+</table>
+<a class="btn" data-route="routes.surveys[survey]">Back to Survey</a>
+<a class="btn danger disabled" data-routage="routes.surveys[survey].questions.new">New Question</a>

@@ -1,10 +1,13 @@
 window.Ask = class Ask extends Batman.App
 
-  Batman.View::prefix = 'assets/views'
+  Batman.ViewStore.prefix = 'assets/views'
 
   @resources 'surveys', ->
     @member 'analyze'
     @resources 'alerts'
+    @resources 'questions'
+    @resources 'surveySegments', ->
+      @resources 'responses'
 
   @resources 'responses'
 

@@ -8,4 +8,8 @@ class SurveySegment < ActiveRecord::Base
       .where(:surveys => {:active => true})
       .first
   end
+
+  def stats
+    @stats ||= SurveySegmentStats.new(self)
+  end
 end

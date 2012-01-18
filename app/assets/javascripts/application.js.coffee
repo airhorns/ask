@@ -7,6 +7,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require twitter/bootstrap
+#= require rickshaw/rickshaw.min
 
 # Batman.js and its adapters
 # w= require batman/batman

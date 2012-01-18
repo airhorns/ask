@@ -1,0 +1,20 @@
+<div class="page-header">
+  <div data-partial="surveys/_navigation"></div>
+  <h1>Segment: <span data-bind="segment.name"></span></h1>
+</div>
+
+<div class="row">
+  <div class="span11">
+    <h3>Average Rating</h3>
+    <div data-view="RatingGraphView" data-data="segment.stats.daily_average_rating" data-height="250" data-legend="false"></div>
+  </div>
+  <div class="span5">
+    <h3>Rating Today</h3>
+    <h1 data-bind="segment.stats.today_average_rating | round 2"></h1>
+    <h6 data-bind="segment.stats.yesterday_average_rating | round 2 | append ' yesterday'"></h6>
+    <hr/>
+    <h3>Responses Today</h3>
+    <h1 data-bind="segment.stats.today_response_count | round 2"></h1>
+    <h6 data-bind="segment.stats.yesterday_response_count | round 2 | append ' yesterday'"></h6>
+  </div>
+</div>
