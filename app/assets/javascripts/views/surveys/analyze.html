@@ -4,20 +4,20 @@
 </div>
 
 <div class="row">
-  <div class="span11">
-    <h3>Rating average for the past month</h3>
-    <div data-view="RatingOverTimeView"></div>
-  </div>
-  <div class="span5">
-    <h3>Rating Today</h3>
-    <h1>3.1</h1>
-    <h6>3.0 yesterday</h6>
-    <hr/>
-    <h3>Responses Today</h3>
-    <h1>6</h1>
-    <h6>5 yesterday</h6>
+  <div class="span16">
+    <h3>30 day rating average across segments</h3>
+    <div data-view="SegmentsRatingGraphView" data-survey="survey"></div>
   </div>
 </div>
-
-<h3>Rating distributions for the past week</h3>
-<div data-view="RatingDistributionView"></div>
+<div class="row">
+  <div class="span4">
+    <h3>Rating This Week</h3>
+    <h1 data-bind="survey.stats.current_week_average_rating | round 2"></h1>
+    <h6 data-bind="survey.stats.previous_week_average_rating | round 2"></h6>
+  </div>
+  <div class="span4">
+    <h3>Responses This Week</h3>
+    <h1 data-bind="survey.stats.current_week_response_count | round 2"></h1>
+    <h6 data-bind="survey.stats.previous_week_response_count | round 2"></h6>
+  </div>
+</div>

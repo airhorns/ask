@@ -6,6 +6,12 @@ class Ask.SurveySegment extends Ask.Model
   @belongsTo 'survey'
   @hasMany 'responses'
 
+  @url: (options) ->
+    surveyId = options.data.survey_id
+    delete options.data.survey_id
+    "/surveys/#{surveyId}/survey_segments"
+
+
   url: ->
     if @isNew()
       "/surveys/#{@get('surveyId')}/survey_segments"
