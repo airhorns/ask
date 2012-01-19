@@ -11,11 +11,9 @@
   <div class="topbar">
     <div class="fill">
       <div class="container">
-        <a class="brand" data-route="'/'">Ask</a>
+        <a class="brand" data-route="'/'"><%= image_tag 'whadyathink.png' %></a>
         <ul class="nav">
-          <li class="active"><a data-route="'/'">Home</a></li>
           <li><a data-route="Survey">Surveys</a></li>
-          <li><a>Contact</a></li>
         </ul>
         <ul class="nav secondary-nav">
           <li><%= link_to('Sign Out', destroy_customer_session_path, :method => :delete) %></li>
@@ -29,7 +27,7 @@
     <div class="content" data-yield="main">
     </div>
     <footer>
-      <p>&copy; Ask 2011</p>
+      <p>&copy; Whadyathink 2012</p>
     </footer>
   </div>
 </body>

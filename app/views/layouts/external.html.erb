@@ -10,7 +10,7 @@
   <div class="topbar">
     <div class="fill">
       <div class="container">
-        <a class="brand" href="#">Ask</a>
+        <a class="brand" data-route="'/'"><%= image_tag 'whadyathink.png' %></a>
         <ul class="nav">
           <li class="active"><%= link_to "Sign In", new_customer_session_path %></li>
         </ul>
@@ -34,7 +34,7 @@
       <%= yield %>
     </div>
     <footer>
-      <p>&copy; Company 2011</p>
+      <p>&copy; Whadyathink 2012</p>
     </footer>
   </div>
 </body>
