@@ -4,7 +4,7 @@ class Alert < ActiveRecord::Base
   validates_presence_of :subject
 
   after_initialize :set_empty_options
-  attr_accessible :options
+  attr_accessible :options, :type
 
   scope :for_answer, lambda { |answer|
     includes(:subject).

@@ -19,6 +19,7 @@ class AlertsController < ApiController
 
   def create
     @alert = @subject.alerts.build(params[:alert])
+    @alert.type = 'ContainsWordAlert'
     @alert.save
     respond_with @alert
   end
