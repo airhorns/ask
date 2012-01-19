@@ -28,7 +28,26 @@ class Ask.AlertsController extends Batman.Controller
       if err
         return if err instanceof Batman.ErrorsHash
         throw err
-      Batman.redirect Ask.get('routes.surveys').get(@get('survey')).get('alerts')
+      Batman.redirect
+        controller: 'alerts'
+        action: 'index'
+        surveyId: @get('survey.id')
+
+  edit: (params) ->
+    @set 'survey', Ask.Survey.find(params.surveyId, (err) -> throw err if err)
+    Ask.Alert.find params.id, (err, alert) =>
+      throw err if err
+      @set 'alert', alert
+
+  update: ->
+    @get('alert').save (err) =>
+      if err
+        return if err instanceof Batman.ErrorsHash
+        throw err
+      Batman.redirect
+        controller: 'alerts'
+        action: 'index'
+        surveyId: @get('survey.id')
 
   destroy: (alert) ->
     alert.destroy (err) ->

@@ -16,9 +16,12 @@ class Ask.TokenizedFieldView extends Batman.View
     @binding.nodeChange = ->
       @set 'filteredValue', tags.tagit('assignedTags')
 
+    @binding._fireNodeChange()
+
     super
 
   tagAdded: =>
-    @binding._fireNodeChange()
+    @binding?._fireNodeChange()
+
   tagRemoved: =>
-    @binding._fireNodeChange()
+    @binding?._fireNodeChange()

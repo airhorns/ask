@@ -14,7 +14,7 @@
     <td data-bind="alert.options.keyword"></td>
     <td data-bind="alert.options.recipients | join ', '"></td>
     <td>
-      <a class="btn info" data-route="alert | routeToAction 'edit'">Edit</a>
+      <a class="btn info" data-route="routes.surveys[survey].alerts[alert].edit">Edit</a>
       <a class="btn danger" data-event-click="destroy | withArguments alert" data-confirm="Are you sure you want to destroy this alert? This can't be undone!">Destroy</a>
     </td>
   </tr>
