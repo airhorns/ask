@@ -6,7 +6,7 @@
     <th>Question</th>
     <th>Answer Rate</th>
   </tr>
-  <tr data-foreach-question="survey.questions">
+  <tr data-foreach-question="survey.questions.sortedBy.order">
     <td data-bind="question.text"></td>
     <td data-bind="question.answerRateAsPercentage | append ' %'"></td>
   </tr>
