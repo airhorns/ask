@@ -34,4 +34,8 @@ class Question < ActiveRecord::Base
   def answer_for(response, text)
     answers.build(:question => self, :response => response, :text => text)
   end
+
+  def as_json(options = {})
+    super({:methods => [:answer_rate]}.merge(options))
+  end
 end
