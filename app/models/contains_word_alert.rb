@@ -15,12 +15,15 @@ class ContainsWordAlert < Alert
   end
 
   def run!(answer)
-    options[:recipients].each do |recipient|
-      self.client.account.sms.messages.create({
-        :to => recipient,
-        :from => answer.response.segment.phone_number,
-        :body => "Keyword \"#{keyword}\" found in response \"#{answer.text}\"!"
-      })
+    body = "Keyword \"#{keyword}\" found in response \"#{answer.text}\"!"
+    while (segment = body.slice!(0, 160)).length > 0
+      options[:recipients].each do |recipient|
+        self.client.account.sms.messages.create({
+          :to => recipient,
+          :from => answer.response.segment.phone_number,
+          :body => segment
+        })
+      end
     end
   end
 end
