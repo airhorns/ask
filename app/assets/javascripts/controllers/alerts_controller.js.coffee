@@ -34,6 +34,7 @@ class Ask.AlertsController extends Batman.Controller
         surveyId: @get('survey.id')
 
   edit: (params) ->
+    @unset 'alert'
     @set 'survey', Ask.Survey.find(params.surveyId, (err) -> throw err if err)
     Ask.Alert.find params.id, (err, alert) =>
       throw err if err
@@ -61,7 +62,7 @@ class Ask.AlertsController extends Batman.Controller
     }
 
   @accessor 'formSubmitText', ->
-    if @get('alert').isNew()
+    if @get('alert')?.isNew()
       "Create Alert"
     else
       "Update Alert"
