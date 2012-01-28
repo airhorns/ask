@@ -55,8 +55,8 @@
   <h3>Questions</h3>
   <div class="panel_contents">
     <ol>
-      <% @survey.questions.each do |question| %>
-        <li><%= question.text %> (<%= link_to 'view', admin_question_path(question) %>)</li>
+      <% @survey.questions.order(:order).each do |question| %>
+        <li><%= question.text %> (<%= link_to 'view', admin_question_path(question) %>, <%= link_to 'edit', admin_edit_question_path(question) %>)</li>
       <% end %>
     </ol>
   </div>
