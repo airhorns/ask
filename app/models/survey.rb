@@ -38,4 +38,14 @@ class Survey < ActiveRecord::Base
     @stats ||= SurveyStats.new(self)
     @stats
   end
+
+  def duplicate
+    new_survey = Survey.new(name: name, customer_id: customer_id, finish_message: finish_message, active: active)
+    questions.each do |question|
+      new_question = question.duplicate
+      new_survey.questions << new_question
+      new_question.survey = new_survey
+    end
+    new_survey
+  end
 end

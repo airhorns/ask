@@ -38,4 +38,8 @@ class Question < ActiveRecord::Base
   def as_json(options = {})
     super({:methods => [:answer_rate]}.merge(options))
   end
+
+  def duplicate
+    new_question = self.class.new(text: text, order: order)
+  end
 end
